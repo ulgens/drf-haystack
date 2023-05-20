@@ -38,7 +38,7 @@ setup(
         "django-haystack>=2.8,<3.4",
         "python-dateutil",
     ],
-    tests_require=["nose", "coverage"],
+    tests_require=["coverage", "geopy", "requests"],
     zip_safe=False,
     test_suite="tests.run_tests.start",
     classifiers=[
