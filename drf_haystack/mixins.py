@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from drf_haystack.filters import HaystackFacetFilter
 
 
-class MoreLikeThisMixin(object):
+class MoreLikeThisMixin:
     """
     Mixin class for supporting "more like this" on an API View.
     """
@@ -33,7 +29,7 @@ class MoreLikeThisMixin(object):
         return Response(serializer.data)
 
 
-class FacetMixin(object):
+class FacetMixin:
     """
     Mixin class for supporting faceting on an API View.
     """
@@ -58,7 +54,7 @@ class FacetMixin(object):
 
             field, value = facet.split(":", 1)
             if value:
-                queryset = queryset.narrow('%s:"%s"' % (field, queryset.query.clean(value)))
+                queryset = queryset.narrow(f'{field}:"{queryset.query.clean(value)}"')
 
         serializer = self.get_facet_serializer(queryset.facet_counts(), objects=queryset, many=False)
         return Response(serializer.data)
@@ -119,4 +115,4 @@ class FacetMixin(object):
         Defaults to using the views ``self.serializer_class`` if not
         ``self.facet_objects_serializer_class`` is set.
         """
-        return self.facet_objects_serializer_class or super(FacetMixin, self).get_serializer_class()
+        return self.facet_objects_serializer_class or super().get_serializer_class()

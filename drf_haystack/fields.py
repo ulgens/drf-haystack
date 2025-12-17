@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import six
 from rest_framework import fields
 
 
-class DRFHaystackFieldMixin(object):
+class DRFHaystackFieldMixin:
     prefix_field_names = False
 
     def __init__(self, **kwargs):
         self.prefix_field_names = kwargs.pop('prefix_field_names', False)
-        super(DRFHaystackFieldMixin, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def bind(self, field_name, parent):
         """
@@ -95,11 +91,10 @@ class FacetDictField(fields.DictField):
     """
 
     def to_representation(self, value):
-        return dict(
-            [(six.text_type(key), self.child.to_representation(key, val))
+        return {
+            str(key): self.child.to_representation(key, val)
              for key, val in value.items()
-             ]
-        )
+        }
 
 
 class FacetListField(fields.ListField):

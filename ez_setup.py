@@ -113,7 +113,7 @@ def _build_egg(egg, tarball, to_dir):
     # returning the result
     log.warn(egg)
     if not os.path.exists(egg):
-        raise IOError('Could not build the egg.')
+        raise OSError('Could not build the egg.')
 
 
 def _do_download(version, download_base, to_dir, download_delay):
@@ -298,7 +298,7 @@ def _create_fake_setuptools_pkg_info(placeholder):
     if not placeholder or not os.path.exists(placeholder):
         log.warn('Could not find the install location')
         return
-    pyver = '%s.%s' % (sys.version_info[0], sys.version_info[1])
+    pyver = f'{sys.version_info[0]}.{sys.version_info[1]}'
     setuptools_file = 'setuptools-%s-py%s.egg-info' % \
             (SETUPTOOLS_FAKED_VERSION, pyver)
     pkg_info = os.path.join(placeholder, setuptools_file)

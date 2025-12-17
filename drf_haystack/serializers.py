@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import copy
 import six
 import warnings
@@ -46,7 +42,7 @@ class Meta(type):
     index_aliases = {}
 
     def __new__(mcs, name, bases, attrs):
-        cls = super(Meta, mcs).__new__(mcs, str(name), bases, attrs)
+        cls = super().__new__(mcs, str(name), bases, attrs)
 
         if cls.fields and cls.exclude:
             raise ImproperlyConfigured("%s cannot define both 'fields' and 'exclude'." % name)
@@ -69,7 +65,7 @@ class HaystackSerializerMeta(serializers.SerializerMetaclass):
     def __new__(mcs, name, bases, attrs):
         attrs.setdefault("_abstract", False)
 
-        cls = super(HaystackSerializerMeta, mcs).__new__(mcs, str(name), bases, attrs)
+        cls = super().__new__(mcs, str(name), bases, attrs)
 
         if getattr(cls, "Meta", None):
             cls.Meta = Meta("Meta", (Meta,), dict(cls.Meta.__dict__))
@@ -80,7 +76,7 @@ class HaystackSerializerMeta(serializers.SerializerMetaclass):
         return cls
 
 
-class HaystackSerializer(six.with_metaclass(HaystackSerializerMeta, serializers.Serializer)):
+class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMeta):
     """
     A `HaystackSerializer` which populates fields based on
     which models that are available in the SearchQueryset.
@@ -111,7 +107,7 @@ class HaystackSerializer(six.with_metaclass(HaystackSerializerMeta, serializers.
     })
 
     def __init__(self, instance=None, data=empty, **kwargs):
-        super(HaystackSerializer, self).__init__(instance, data, **kwargs)
+        super().__init__(instance, data, **kwargs)
 
         if not self.Meta.index_classes and not self.Meta.serializers:
             raise ImproperlyConfigured("You must set either the 'index_classes' or 'serializers' "
@@ -183,9 +179,9 @@ class HaystackSerializer(six.with_metaclass(HaystackSerializerMeta, serializers.
             prefix = ""
             if prefix_field_names:
                 prefix = "_%s__" % self._get_index_class_name(index_cls)
-            for field_name, field_type in six.iteritems(index_cls.fields):
+            for field_name, field_type in index_cls.fields.items():
                 orig_name = field_name
-                field_name = "%s%s" % (prefix, field_name)
+                field_name = f"{prefix}{field_name}"
 
                 # Don't use this field if it is in `ignore_fields`
                 if orig_name in ignore_fields or field_name in ignore_fields:
@@ -223,7 +219,7 @@ class HaystackSerializer(six.with_metaclass(HaystackSerializerMeta, serializers.
         if self.Meta.serializers:
             ret = self.multi_serializer_representation(instance)
         else:
-            ret = super(HaystackSerializer, self).to_representation(instance)
+            ret = super().to_representation(instance)
             prefix_field_names = len(getattr(self.Meta, "index_classes")) > 1
             current_index = self._get_index_class_name(type(instance.searchindex))
             for field in self.fields.keys():
@@ -264,7 +260,7 @@ class FacetFieldSerializer(serializers.Serializer):
 
     def __init__(self, *args, **kwargs):
         self._parent_field = None
-        super(FacetFieldSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @property
     def parent_field(self):
@@ -317,7 +313,7 @@ class FacetFieldSerializer(serializers.Serializer):
         The text field should contain the faceted value.
         """
         instance = instance[0]
-        if isinstance(instance, (six.text_type, six.string_types)):
+        if isinstance(instance, (str, (str,))):
             return serializers.CharField(read_only=True).to_representation(instance)
         elif isinstance(instance, datetime):
             return serializers.DateTimeField(read_only=True).to_representation(instance)
@@ -346,10 +342,10 @@ class FacetFieldSerializer(serializers.Serializer):
             del query_params[page_query_param]
 
         selected_facets = set(query_params.pop(self.root.facet_query_params_text, []))
-        selected_facets.add("%(field)s_exact:%(text)s" % {"field": self.parent_field, "text": text})
+        selected_facets.add(f"{self.parent_field}_exact:{text}")
         query_params.setlist(self.root.facet_query_params_text, sorted(selected_facets))
 
-        path = "%(path)s?%(query)s" % {"path": request.path_info, "query": query_params.urlencode()}
+        path = f"{request.path_info}?{query_params.urlencode()}"
         url = request.build_absolute_uri(path)
         return serializers.Hyperlink(url, "narrow-url")
 
@@ -359,10 +355,10 @@ class FacetFieldSerializer(serializers.Serializer):
         so that each field can query it to see what kind of attribute they are processing.
         """
         self.parent_field = field
-        return super(FacetFieldSerializer, self).to_representation(instance)
+        return super().to_representation(instance)
 
 
-class HaystackFacetSerializer(six.with_metaclass(HaystackSerializerMeta, serializers.Serializer)):
+class HaystackFacetSerializer(serializers.Serializer, metaclass=HaystackSerializerMeta):
     """
     The ``HaystackFacetSerializer`` is used to serialize the ``facet_counts()``
     dictionary results on a ``SearchQuerySet`` instance.
@@ -426,7 +422,7 @@ class HaystackFacetSerializer(six.with_metaclass(HaystackSerializerMeta, seriali
         return self.context["facet_query_params_text"]
 
 
-class HaystackSerializerMixin(object):
+class HaystackSerializerMixin:
     """
     This mixin can be added to a serializer to use the actual object as the data source for serialization rather
     than the data stored in the search index fields.  This makes it easy to return data from search results in
@@ -435,10 +431,10 @@ class HaystackSerializerMixin(object):
 
     def to_representation(self, instance):
         obj = instance.object
-        return super(HaystackSerializerMixin, self).to_representation(obj)
+        return super().to_representation(obj)
 
 
-class HighlighterMixin(object):
+class HighlighterMixin:
     """
     This mixin adds support for ``highlighting`` (the pure python, portable
     version, not SearchQuerySet().highlight()). See Haystack docs
@@ -474,11 +470,11 @@ class HighlighterMixin(object):
         """
         Returns the terms to be highlighted
         """
-        terms = " ".join(six.itervalues(self.context["request"].GET))
+        terms = " ".join(self.context["request"].GET.values())
         return terms
 
     def to_representation(self, instance):
-        ret = super(HighlighterMixin, self).to_representation(instance)
+        ret = super().to_representation(instance)
         terms = self.get_terms(ret)
         if terms:
             highlighter = self.get_highlighter()(terms, **{

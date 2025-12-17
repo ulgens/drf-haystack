@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import operator
 import six
 from functools import reduce
@@ -154,7 +150,7 @@ class HaystackHighlightFilter(HaystackFilter):
     """
 
     def filter_queryset(self, request, queryset, view):
-        queryset = super(HaystackHighlightFilter, self).filter_queryset(request, queryset, view)
+        queryset = super().filter_queryset(request, queryset, view)
         if self.get_request_filters(request) and isinstance(queryset, SearchQuerySet):
             queryset = queryset.highlight()
         return queryset
@@ -225,7 +221,7 @@ class HaystackOrderingFilter(OrderingFilter):
     """
 
     def get_default_valid_fields(self, queryset, view, context={}):
-        valid_fields = super(HaystackOrderingFilter, self).get_default_valid_fields(queryset, view, context)
+        valid_fields = super().get_default_valid_fields(queryset, view, context)
 
         # Check if we need to support aggregate serializers
         serializer_class = view.get_serializer_class()
@@ -255,7 +251,7 @@ class HaystackOrderingFilter(OrderingFilter):
             valid_fields = list(set(reduce(operator.concat, model_fields)))
         else:
             valid_fields = [
-                (item, item) if isinstance(item, six.string_types) else item
+                (item, item) if isinstance(item, str) else item
                 for item in valid_fields
             ]
 

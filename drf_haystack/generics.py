@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import six
 
 from django.contrib.contenttypes.models import ContentType
@@ -72,7 +68,7 @@ class HaystackGenericAPIView(GenericAPIView):
         queryset = self.get_queryset()
         if "model" in self.request.query_params:
             try:
-                app_label, model = map(six.text_type.lower, self.request.query_params["model"].split(".", 1))
+                app_label, model = map(str.lower, self.request.query_params["model"].split(".", 1))
                 ctype = ContentType.objects.get(app_label=app_label, model=model)
                 queryset = self.get_queryset(index_models=[ctype.model_class()])
             except (ValueError, ContentType.DoesNotExist):
@@ -96,7 +92,7 @@ class HaystackGenericAPIView(GenericAPIView):
         raise Http404("No result matches the given query.")
 
     def filter_queryset(self, queryset):
-        queryset = super(HaystackGenericAPIView, self).filter_queryset(queryset)
+        queryset = super().filter_queryset(queryset)
         
         if self.load_all:
             queryset = queryset.load_all()

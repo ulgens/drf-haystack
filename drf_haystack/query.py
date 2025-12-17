@@ -1,21 +1,16 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import operator
 import six
 import warnings
 from itertools import chain
 
 
-from six.moves import zip
 from dateutil import parser
 
 from drf_haystack import constants
 from drf_haystack.utils import merge_dict
 
 
-class BaseQueryBuilder(object):
+class BaseQueryBuilder:
     """
     Query builder base class.
     """
@@ -79,12 +74,12 @@ class FilterQueryBuilder(BaseQueryBuilder):
     """
 
     def __init__(self, backend, view):
-        super(FilterQueryBuilder, self).__init__(backend, view)
+        super().__init__(backend, view)
 
         assert getattr(self.backend, "default_operator", None) in (operator.and_, operator.or_), (
-            "%(cls)s.default_operator must be either 'operator.and_' or 'operator.or_'." % {
-                "cls": self.backend.__class__.__name__
-            })
+            "{cls}.default_operator must be either 'operator.and_' or 'operator.or_'.".format(
+                cls=self.backend.__class__.__name__
+            ))
         self.default_operator = self.backend.default_operator
         self.default_same_param_operator = getattr(self.backend, "default_same_param_operator", self.default_operator)
 
@@ -227,7 +222,7 @@ class FacetQueryBuilder(BaseQueryBuilder):
         """
         defaults = {}
         for option in options:
-            if isinstance(option, six.text_type):
+            if isinstance(option, str):
                 tokens = [token.strip() for token in option.split(self.view.lookup_sep)]
 
                 for token in tokens:
@@ -257,7 +252,7 @@ class SpatialQueryBuilder(BaseQueryBuilder):
     """
 
     def __init__(self, backend, view):
-        super(SpatialQueryBuilder, self).__init__(backend, view)
+        super().__init__(backend, view)
 
         assert getattr(self.backend, "point_field", None) is not None, (
             "%(cls)s.point_field cannot be None. Set the %(cls)s.point_field "
@@ -293,9 +288,9 @@ class SpatialQueryBuilder(BaseQueryBuilder):
 
         applicable_filters = None
 
-        filters = dict((k, filters[k]) for k in chain(self.D.UNITS.keys(),
-                                                      [constants.DRF_HAYSTACK_SPATIAL_QUERY_PARAM]) if k in filters)
-        distance = dict((k, v) for k, v in filters.items() if k in self.D.UNITS.keys())
+        filters = {k: filters[k] for k in chain(self.D.UNITS.keys(),
+                                                      [constants.DRF_HAYSTACK_SPATIAL_QUERY_PARAM]) if k in filters}
+        distance = {k: v for k, v in filters.items() if k in self.D.UNITS.keys()}
 
         try:
             latitude, longitude = map(float, self.tokenize(filters[constants.DRF_HAYSTACK_SPATIAL_QUERY_PARAM],

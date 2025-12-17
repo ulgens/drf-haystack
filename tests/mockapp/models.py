@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import pytz
 from datetime import date, datetime, timedelta
 from random import randrange, randint
@@ -59,7 +55,7 @@ class MockPerson(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s %s" % (self.firstname, self.lastname)
+        return f"{self.firstname} {self.lastname}"
 
 
 class MockPet(models.Model):
