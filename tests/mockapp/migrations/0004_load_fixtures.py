@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import os
 
 from django.core import serializers
@@ -14,17 +11,17 @@ def load_data(apps, schema_editor):
 
     fixtures = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, "fixtures"))
 
-    with open(os.path.join(fixtures, "mockperson.json"), "r") as fixture:
+    with open(os.path.join(fixtures, "mockperson.json")) as fixture:
         objects = serializers.deserialize("json", fixture, ignorenonexistent=True)
         for obj in objects:
             obj.save()
 
-    with open(os.path.join(fixtures, "mocklocation.json"), "r") as fixture:
+    with open(os.path.join(fixtures, "mocklocation.json")) as fixture:
         objects = serializers.deserialize("json", fixture, ignorenonexistent=True)
         for obj in objects:
             obj.save()
 
-    with open(os.path.join(fixtures, "mockpet.json"), "r") as fixture:
+    with open(os.path.join(fixtures, "mockpet.json")) as fixture:
         objects = serializers.deserialize("json", fixture, ignorenonexistent=True)
         for obj in objects:
             obj.save()

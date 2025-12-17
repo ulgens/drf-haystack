@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import six
 from copy import deepcopy
 
@@ -20,7 +16,7 @@ def merge_dict(a, b):
         return b
 
     result = deepcopy(a)
-    for key, val in six.iteritems(b):
+    for key, val in b.items():
         if key in result and isinstance(result[key], dict):
             result[key] = merge_dict(result[key], val)
         elif key in result and isinstance(result[key], list):

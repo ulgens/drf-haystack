@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 from django.test import TestCase
 
 from drf_haystack.utils import merge_dict

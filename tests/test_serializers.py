@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 #
 # Unit tests for the `drf_haystack.serializers` classes.
 #
 
-from __future__ import absolute_import, unicode_literals
 
 import json
 from datetime import datetime, timedelta
@@ -384,10 +382,10 @@ class HaystackSerializerHighlighterMixinTestCase(WarningTestCaseMixin, TestCase)
             self.assertTrue("highlighted" in result)
             self.assertEqual(
                 result["highlighted"],
-                " ".join(('<%(tag)s class="%(css_class)s">Jeremy</%(tag)s>' % {
-                    "tag": self.view1.serializer_class.highlighter_html_tag,
-                    "css_class": self.view1.serializer_class.highlighter_css_class
-                }, "%s" % "is a nice chap!"))
+                " ".join(('<{tag} class="{css_class}">Jeremy</{tag}>'.format(
+                    tag=self.view1.serializer_class.highlighter_html_tag,
+                    css_class=self.view1.serializer_class.highlighter_css_class
+                ), "%s" % "is a nice chap!"))
             )
 
     def test_serializer_highlighter_raise_no_highlighter_class(self):
@@ -453,7 +451,7 @@ class HaystackFacetSerializerTestCase(TestCase):
         Builds an absolute URI using the test server's domain and the specified location.
         """
         location = location.lstrip("/")
-        return "http://testserver/{location}".format(location=location)
+        return f"http://testserver/{location}"
 
     @staticmethod
     def is_paginated_facet_response(response):
@@ -652,7 +650,7 @@ class HaystackMultiSerializerTestCase(WarningTestCaseMixin, TestCase):
 class TestHaystackSerializerMeta(SimpleTestCase):
 
     def test_abstract_not_inherited(self):
-        class Base(six.with_metaclass(HaystackSerializerMeta, serializers.Serializer)):
+        class Base(serializers.Serializer, metaclass=HaystackSerializerMeta):
             _abstract = True
 
         def create_subclass():

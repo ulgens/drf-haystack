@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 #
 # Unit tests for the `drf_haystack.filters` classes.
 #
 
-from __future__ import absolute_import, unicode_literals
 
 import json
 from datetime import date, datetime, timedelta

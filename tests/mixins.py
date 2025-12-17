@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
 import warnings
 
 
-class WarningTestCaseMixin(object):
+class WarningTestCaseMixin:
     """
     TestCase mixin to catch warnings
     """
