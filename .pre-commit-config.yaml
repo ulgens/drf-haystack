@@ -9,4 +9,4 @@ repos:
     rev: 1.29.1
     hooks:
     -   id: django-upgrade
-        args: ["--target-version=2.2"]
+        args: ["--target-version=3.0"]
