@@ -1,12 +1,12 @@
 import os
 from importlib.util import find_spec
+import django
 
 test_runner = None
 old_config = None
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 
-import django
 
 if hasattr(django, "setup"):
     django.setup()
