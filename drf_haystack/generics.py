@@ -93,7 +93,7 @@ class HaystackGenericAPIView(GenericAPIView):
 
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
-        
+
         if self.load_all:
             queryset = queryset.load_all()
 

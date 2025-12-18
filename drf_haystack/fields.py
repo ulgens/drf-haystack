@@ -105,5 +105,3 @@ class FacetListField(fields.ListField):
 
     def to_representation(self, key, data):
         return [self.child.to_representation(key, item) for item in data]
-
-

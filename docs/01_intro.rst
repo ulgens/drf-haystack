@@ -209,4 +209,3 @@ The default keyword is ``not``, but is configurable via settings using ``DRF_HAY
     http://example.com/api/v1/location/search/?city__not=Oslo
     http://example.com/api/v1/location/search/?city__not__contains=Los
     http://example.com/api/v1/location/search/?city__contains=Los&city__not__contains=Angeles
-
