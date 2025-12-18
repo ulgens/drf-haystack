@@ -5,15 +5,14 @@ import tests.mockapp.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('mockapp', '0002_mockperson'),
+        ("mockapp", "0002_mockperson"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='mockperson',
-            name='birthdate',
+            model_name="mockperson",
+            name="birthdate",
             field=models.DateField(default=tests.mockapp.models.get_random_date, null=True),
         ),
     ]

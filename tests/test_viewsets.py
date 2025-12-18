@@ -30,7 +30,6 @@ factory = APIRequestFactory()
 
 
 class HaystackViewSetTestCase(TestCase):
-
     fixtures = ["mockperson", "mockpet"]
 
     def setUp(self):
@@ -39,7 +38,6 @@ class HaystackViewSetTestCase(TestCase):
         self.router = SimpleRouter()
 
         class FacetSerializer(HaystackFacetSerializer):
-
             class Meta:
                 fields = ["firstname", "lastname", "created"]
 
@@ -101,10 +99,7 @@ class HaystackViewSetTestCase(TestCase):
 
     def test_viewset_get_object_invalid_lookup_field(self):
         request = factory.get(path="/", data="", content_type="application/json")
-        self.assertRaises(
-            AttributeError,
-            self.view1.as_view(actions={"get": "retrieve"}), request, invalid_lookup=1
-        )
+        self.assertRaises(AttributeError, self.view1.as_view(actions={"get": "retrieve"}), request, invalid_lookup=1)
 
     def test_viewset_get_obj_override_lookup_field(self):
         setattr(self.view1, "lookup_field", "custom_lookup")
@@ -130,7 +125,6 @@ class HaystackViewSetTestCase(TestCase):
 
 
 class HaystackViewSetPermissionsTestCase(TestCase):
-
     fixtures = ["mockperson"]
 
     def setUp(self):
@@ -155,7 +149,8 @@ class HaystackViewSetPermissionsTestCase(TestCase):
 
     def test_viewset_get_queryset_with_AllowAny_permission(self):
         from rest_framework.permissions import AllowAny
-        setattr(self.view, "permission_classes", (AllowAny, ))
+
+        setattr(self.view, "permission_classes", (AllowAny,))
 
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view.as_view(actions={"get": "list"})(request)
@@ -163,7 +158,8 @@ class HaystackViewSetPermissionsTestCase(TestCase):
 
     def test_viewset_get_queryset_with_IsAuthenticated_permission(self):
         from rest_framework.permissions import IsAuthenticated
-        setattr(self.view, "permission_classes", (IsAuthenticated, ))
+
+        setattr(self.view, "permission_classes", (IsAuthenticated,))
 
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view.as_view(actions={"get": "list"})(request)
@@ -175,6 +171,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
 
     def test_viewset_get_queryset_with_IsAdminUser_permission(self):
         from rest_framework.permissions import IsAdminUser
+
         setattr(self.view, "permission_classes", (IsAdminUser,))
 
         request = factory.get(path="/", data="", content_type="application/json")
@@ -188,6 +185,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
 
     def test_viewset_get_queryset_with_IsAuthenticatedOrReadOnly_permission(self):
         from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
         setattr(self.view, "permission_classes", (IsAuthenticatedOrReadOnly,))
 
         # Unauthenticated GET requests should pass
@@ -207,6 +205,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
     @skipIf(not restframework_version < (3, 7), "Skipped due to fix in django-rest-framework > 3.6")
     def test_viewset_get_queryset_with_DjangoModelPermissions_permission(self):
         from rest_framework.permissions import DjangoModelPermissions
+
         setattr(self.view, "permission_classes", (DjangoModelPermissions,))
 
         # The `DjangoModelPermissions` is not supported and should raise an
@@ -214,17 +213,23 @@ class HaystackViewSetPermissionsTestCase(TestCase):
         request = factory.get(path="/", data="", content_type="application/json")
         try:
             self.view.as_view(actions={"get": "list"})(request)
-            self.fail("Did not fail with AssertionError or AttributeError "
-                      "when calling HaystackView with DjangoModelPermissions")
+            self.fail(
+                "Did not fail with AssertionError or AttributeError "
+                "when calling HaystackView with DjangoModelPermissions"
+            )
         except (AttributeError, AssertionError) as e:
             if isinstance(e, AttributeError):
                 self.assertEqual(str(e), "'SearchQuerySet' object has no attribute 'model'")
             else:
-                self.assertEqual(str(e), "Cannot apply DjangoModelPermissions on a view that does "
-                                         "not have `.model` or `.queryset` property.")
+                self.assertEqual(
+                    str(e),
+                    "Cannot apply DjangoModelPermissions on a view that does "
+                    "not have `.model` or `.queryset` property.",
+                )
 
     def test_viewset_get_queryset_with_DjangoModelPermissionsOrAnonReadOnly_permission(self):
         from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+
         setattr(self.view, "permission_classes", (DjangoModelPermissionsOrAnonReadOnly,))
 
         # The `DjangoModelPermissionsOrAnonReadOnly` is not supported and should raise an
@@ -232,18 +237,23 @@ class HaystackViewSetPermissionsTestCase(TestCase):
         request = factory.get(path="/", data="", content_type="application/json")
         try:
             self.view.as_view(actions={"get": "list"})(request)
-            self.fail("Did not fail with AssertionError when calling HaystackView "
-                      "with DjangoModelPermissionsOrAnonReadOnly")
+            self.fail(
+                "Did not fail with AssertionError when calling HaystackView with DjangoModelPermissionsOrAnonReadOnly"
+            )
         except (AttributeError, AssertionError) as e:
             if isinstance(e, AttributeError):
                 self.assertEqual(str(e), "'SearchQuerySet' object has no attribute 'model'")
             else:
-                self.assertEqual(str(e), "Cannot apply DjangoModelPermissions on a view that does "
-                                         "not have `.model` or `.queryset` property.")
+                self.assertEqual(
+                    str(e),
+                    "Cannot apply DjangoModelPermissions on a view that does "
+                    "not have `.model` or `.queryset` property.",
+                )
 
     @skipIf(not restframework_version < (3, 7), "Skipped due to fix in django-rest-framework > 3.6")
     def test_viewset_get_queryset_with_DjangoObjectPermissions_permission(self):
         from rest_framework.permissions import DjangoObjectPermissions
+
         setattr(self.view, "permission_classes", (DjangoObjectPermissions,))
 
         # The `DjangoObjectPermissions` is a subclass of `DjangoModelPermissions` and
@@ -256,12 +266,14 @@ class HaystackViewSetPermissionsTestCase(TestCase):
             if isinstance(e, AttributeError):
                 self.assertEqual(str(e), "'SearchQuerySet' object has no attribute 'model'")
             else:
-                self.assertEqual(str(e), "Cannot apply DjangoModelPermissions on a view that does "
-                                         "not have `.model` or `.queryset` property.")
+                self.assertEqual(
+                    str(e),
+                    "Cannot apply DjangoModelPermissions on a view that does "
+                    "not have `.model` or `.queryset` property.",
+                )
 
 
 class PaginatedHaystackViewSetTestCase(TestCase):
-
     fixtures = ["mockperson"]
 
     def setUp(self):
@@ -269,17 +281,14 @@ class PaginatedHaystackViewSetTestCase(TestCase):
         MockPersonIndex().reindex()
 
         class Serializer1(HaystackSerializer):
-
             class Meta:
                 fields = ["firstname", "lastname"]
                 index_classes = [MockPersonIndex]
 
         class NumberPagination(PageNumberPagination):
-
             page_size = 5
 
         class ViewSet1(HaystackViewSet):
-
             index_models = [MockPerson]
             serializer_class = Serializer1
             pagination_class = NumberPagination

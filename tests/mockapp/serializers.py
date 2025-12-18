@@ -6,42 +6,39 @@ from .search_indexes import MockPersonIndex, MockLocationIndex
 
 
 class SearchSerializer(HaystackSerializer):
-
     class Meta:
         index_classes = [MockPersonIndex, MockLocationIndex]
         fields = [
-            "firstname", "lastname", "birthdate", "full_name", "text",
-            "address", "city", "zip_code", "highlighted"
+            "firstname",
+            "lastname",
+            "birthdate",
+            "full_name",
+            "text",
+            "address",
+            "city",
+            "zip_code",
+            "highlighted",
         ]
 
 
 class HighlighterSerializer(HighlighterMixin, HaystackSerializer):
-
     highlighter_css_class = "my-highlighter-class"
     highlighter_html_tag = "em"
 
     class Meta:
         index_classes = [MockPersonIndex, MockLocationIndex]
-        fields = [
-            "firstname", "lastname", "full_name",
-            "address", "city", "zip_code", "coordinates"
-        ]
+        fields = ["firstname", "lastname", "full_name", "address", "city", "zip_code", "coordinates"]
 
 
 class MoreLikeThisSerializer(HaystackSerializer):
-
     more_like_this = HyperlinkedIdentityField(view_name="search-person-mlt-more-like-this", read_only=True)
 
     class Meta:
         index_classes = [MockPersonIndex]
-        fields = [
-            "firstname", "lastname", "full_name",
-            "autocomplete"
-        ]
+        fields = ["firstname", "lastname", "full_name", "autocomplete"]
 
 
 class MockPersonFacetSerializer(HaystackFacetSerializer):
-
     serialize_objects = True
 
     class Meta:
@@ -54,6 +51,6 @@ class MockPersonFacetSerializer(HaystackFacetSerializer):
                 "start_date": datetime.now() - timedelta(days=3 * 365),
                 "end_date": datetime.now(),
                 "gap_by": "day",
-                "gap_amount": 10
-            }
+                "gap_amount": 10,
+            },
         }

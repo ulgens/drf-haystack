@@ -20,9 +20,12 @@ from rest_framework.test import APIRequestFactory, APITestCase
 
 from drf_haystack import fields
 from drf_haystack.serializers import (
-    HighlighterMixin, HaystackSerializer,
-    HaystackSerializerMixin, HaystackFacetSerializer,
-    HaystackSerializerMeta)
+    HighlighterMixin,
+    HaystackSerializer,
+    HaystackSerializerMixin,
+    HaystackFacetSerializer,
+    HaystackSerializerMeta,
+)
 from drf_haystack.viewsets import HaystackViewSet
 from drf_haystack.mixins import MoreLikeThisMixin, FacetMixin
 
@@ -51,7 +54,6 @@ class SearchPersonMLTViewSet(MoreLikeThisMixin, HaystackViewSet):
 
 # Faceting stuff
 class SearchPersonFSerializer(HaystackSerializer):
-
     class Meta:
         index_classes = [MockPersonIndex]
         fields = ["firstname", "lastname", "full_name"]
@@ -70,8 +72,8 @@ class SearchPersonFacetSerializer(HaystackFacetSerializer):
                 "start_date": datetime.now() - timedelta(days=10 * 365),
                 "end_date": datetime.now(),
                 "gap_by": "month",
-                "gap_amount": 1
-            }
+                "gap_amount": 1,
+            },
         }
 
 
@@ -87,13 +89,10 @@ router = DefaultRouter()
 router.register("search-person-mlt", viewset=SearchPersonMLTViewSet, basename="search-person-mlt")
 router.register("search-person-facet", viewset=SearchPersonFacetViewSet, basename="search-person-facet")
 
-urlpatterns = [
-    path(r"^", include(router.urls))
-]
+urlpatterns = [path(r"^", include(router.urls))]
 
 
 class HaystackSerializerTestCase(WarningTestCaseMixin, TestCase):
-
     fixtures = ["mockperson", "mockpet"]
 
     def setUp(self):
@@ -101,7 +100,6 @@ class HaystackSerializerTestCase(WarningTestCaseMixin, TestCase):
         MockPetIndex().reindex()
 
         class Serializer1(HaystackSerializer):
-
             integer_field = serializers.IntegerField()
             city = serializers.SerializerMethodField()
 
@@ -116,20 +114,17 @@ class HaystackSerializerTestCase(WarningTestCaseMixin, TestCase):
                 return "Declared overriding field"
 
         class Serializer2(HaystackSerializer):
-
             class Meta:
                 index_classes = [MockPersonIndex]
                 exclude = ["firstname"]
 
         class Serializer3(HaystackSerializer):
-
             class Meta:
                 index_classes = [MockPersonIndex]
                 fields = ["text", "firstname", "lastname", "autocomplete"]
                 ignore_fields = ["autocomplete"]
 
         class Serializer7(HaystackSerializer):
-
             class Meta:
                 index_classes = [MockPetIndex]
 
@@ -150,16 +145,19 @@ class HaystackSerializerTestCase(WarningTestCaseMixin, TestCase):
 
     def test_serializer_raise_without_meta_class(self):
         try:
+
             class Serializer(HaystackSerializer):
                 pass
+
             self.fail("Did not fail when defining a Serializer without a Meta class")
         except ImproperlyConfigured as e:
             self.assertEqual(str(e), "%s must implement a Meta class or have the property _abstract" % "Serializer")
 
     def test_serializer_gets_default_instance(self):
         serializer = self.serializer1(instance=None)
-        self.assertIsInstance(serializer.instance, SearchQuerySet,
-                              "Did not get default instance of type SearchQuerySet")
+        self.assertIsInstance(
+            serializer.instance, SearchQuerySet, "Did not get default instance of type SearchQuerySet"
+        )
 
     def test_serializer_get_fields(self):
         obj = SearchQuerySet().filter(lastname="Foreman")[0]
@@ -205,11 +203,10 @@ class HaystackSerializerTestCase(WarningTestCaseMixin, TestCase):
         obj = SearchQuerySet().filter(lastname="Foreman")[0]
         serializer = self.serializer1(instance=obj)
 
-        self.assertEqual(serializer.data['city'], "Declared overriding field")
+        self.assertEqual(serializer.data["city"], "Declared overriding field")
 
 
 class HaystackSerializerAllFieldsTestCase(TestCase):
-
     fixtures = ["mockallfield"]
 
     def setUp(self):
@@ -218,28 +215,34 @@ class HaystackSerializerAllFieldsTestCase(TestCase):
         class Serializer1(HaystackSerializer):
             class Meta:
                 index_classes = [MockAllFieldIndex]
-                fields = ["charfield", "integerfield", "floatfield",
-                          "decimalfield", "boolfield", "datefield",
-                          "datetimefield", "multivaluefield"]
+                fields = [
+                    "charfield",
+                    "integerfield",
+                    "floatfield",
+                    "decimalfield",
+                    "boolfield",
+                    "datefield",
+                    "datetimefield",
+                    "multivaluefield",
+                ]
 
         self.serializer1 = Serializer1
 
     def test_serialize_field_is_correct_type(self):
-        obj = SearchQuerySet().models(MockAllField).latest('datetimefield')
+        obj = SearchQuerySet().models(MockAllField).latest("datetimefield")
         serializer = self.serializer1(instance=obj, many=False)
 
-        self.assertIsInstance(serializer.fields['charfield'], fields.HaystackCharField)
-        self.assertIsInstance(serializer.fields['integerfield'], fields.HaystackIntegerField)
-        self.assertIsInstance(serializer.fields['floatfield'], fields.HaystackFloatField)
-        self.assertIsInstance(serializer.fields['decimalfield'], fields.HaystackDecimalField)
-        self.assertIsInstance(serializer.fields['boolfield'], fields.HaystackBooleanField)
-        self.assertIsInstance(serializer.fields['datefield'], fields.HaystackDateField)
-        self.assertIsInstance(serializer.fields['datetimefield'], fields.HaystackDateTimeField)
-        self.assertIsInstance(serializer.fields['multivaluefield'], fields.HaystackMultiValueField)
+        self.assertIsInstance(serializer.fields["charfield"], fields.HaystackCharField)
+        self.assertIsInstance(serializer.fields["integerfield"], fields.HaystackIntegerField)
+        self.assertIsInstance(serializer.fields["floatfield"], fields.HaystackFloatField)
+        self.assertIsInstance(serializer.fields["decimalfield"], fields.HaystackDecimalField)
+        self.assertIsInstance(serializer.fields["boolfield"], fields.HaystackBooleanField)
+        self.assertIsInstance(serializer.fields["datefield"], fields.HaystackDateField)
+        self.assertIsInstance(serializer.fields["datetimefield"], fields.HaystackDateTimeField)
+        self.assertIsInstance(serializer.fields["multivaluefield"], fields.HaystackMultiValueField)
 
 
 class HaystackSerializerMultipleIndexTestCase(WarningTestCaseMixin, TestCase):
-
     fixtures = ["mockperson", "mockpet"]
 
     def setUp(self):
@@ -259,6 +262,7 @@ class HaystackSerializerMultipleIndexTestCase(WarningTestCaseMixin, TestCase):
             """
             Multiple index serializer with declared fields
             """
+
             _MockPersonIndex__hair_color = serializers.SerializerMethodField()
             extra = serializers.SerializerMethodField()
 
@@ -280,9 +284,7 @@ class HaystackSerializerMultipleIndexTestCase(WarningTestCaseMixin, TestCase):
             class Meta:
                 index_classes = [MockPersonIndex, MockPetIndex]
                 exclude = ["firstname"]
-                index_aliases = {
-                    'mockapp.MockPersonIndex': 'People'
-                }
+                index_aliases = {"mockapp.MockPersonIndex": "People"}
 
         class ViewSet1(HaystackViewSet):
             serializer_class = Serializer1
@@ -344,7 +346,6 @@ class HaystackSerializerMultipleIndexTestCase(WarningTestCaseMixin, TestCase):
 
 
 class HaystackSerializerHighlighterMixinTestCase(WarningTestCaseMixin, TestCase):
-
     fixtures = ["mockperson"]
 
     def setUp(self):
@@ -382,10 +383,13 @@ class HaystackSerializerHighlighterMixinTestCase(WarningTestCaseMixin, TestCase)
             self.assertTrue("highlighted" in result)
             self.assertEqual(
                 result["highlighted"],
-                " ".join(('<{tag} class="{css_class}">Jeremy</{tag}>'.format(
-                    tag=self.view1.serializer_class.highlighter_html_tag,
-                    css_class=self.view1.serializer_class.highlighter_css_class
-                ), "%s" % "is a nice chap!"))
+                " ".join((
+                    '<{tag} class="{css_class}">Jeremy</{tag}>'.format(
+                        tag=self.view1.serializer_class.highlighter_html_tag,
+                        css_class=self.view1.serializer_class.highlighter_css_class,
+                    ),
+                    "%s" % "is a nice chap!",
+                )),
             )
 
     def test_serializer_highlighter_raise_no_highlighter_class(self):
@@ -397,13 +401,12 @@ class HaystackSerializerHighlighterMixinTestCase(WarningTestCaseMixin, TestCase)
             self.assertEqual(
                 str(e),
                 "%(cls)s is missing a highlighter_class. Define %(cls)s.highlighter_class, "
-                "or override %(cls)s.get_highlighter()." % {"cls": self.view2.serializer_class.__name__}
+                "or override %(cls)s.get_highlighter()." % {"cls": self.view2.serializer_class.__name__},
             )
 
 
 @override_settings(ROOT_URLCONF="tests.test_serializers")
 class HaystackSerializerMoreLikeThisTestCase(APITestCase):
-
     fixtures = ["mockperson"]
 
     def setUp(self):
@@ -414,33 +417,28 @@ class HaystackSerializerMoreLikeThisTestCase(APITestCase):
 
     def test_serializer_more_like_this_link(self):
         response = self.client.get(
-            path="/search-person-mlt/",
-            data={"firstname": "odysseus", "lastname": "cooley"},
-            format="json"
+            path="/search-person-mlt/", data={"firstname": "odysseus", "lastname": "cooley"}, format="json"
         )
         self.assertEqual(
             response.data,
-            [{
-                "lastname": "Cooley",
-                "full_name": "Odysseus Cooley",
-                "firstname": "Odysseus",
-                "more_like_this": "http://testserver/search-person-mlt/18/more-like-this/"
-            }]
+            [
+                {
+                    "lastname": "Cooley",
+                    "full_name": "Odysseus Cooley",
+                    "firstname": "Odysseus",
+                    "more_like_this": "http://testserver/search-person-mlt/18/more-like-this/",
+                }
+            ],
         )
 
 
 @override_settings(ROOT_URLCONF="tests.test_serializers")
 class HaystackFacetSerializerTestCase(TestCase):
-
     fixtures = ["mockperson"]
 
     def setUp(self):
         MockPersonIndex().reindex()
-        self.response = self.client.get(
-            path="/search-person-facet/facets/",
-            data={},
-            format="json"
-        )
+        self.response = self.client.get(path="/search-person-facet/facets/", data={}, format="json")
 
     def tearDown(self):
         MockPersonIndex().clear()
@@ -459,8 +457,9 @@ class HaystackFacetSerializerTestCase(TestCase):
         Returns True if the response.data seems like a faceted result.
         Only works for responses created with the test client.
         """
-        return "objects" in response.data and \
-               all([k in response.data["objects"] for k in ("count", "next", "previous", "results")])
+        return "objects" in response.data and all([
+            k in response.data["objects"] for k in ("count", "next", "previous", "results")
+        ])
 
     def test_serializer_facet_top_level_structure(self):
         for key in ("fields", "dates", "queries"):
@@ -476,17 +475,18 @@ class HaystackFacetSerializerTestCase(TestCase):
         self.assertTrue({"text", "count", "narrow_url"} <= set(firstname))
         self.assertEqual(
             firstname["narrow_url"],
-            self.build_absolute_uri("/search-person-facet/facets/?selected_facets=firstname_exact%3A{term}".format(
-                term=firstname["text"]))
+            self.build_absolute_uri(
+                "/search-person-facet/facets/?selected_facets=firstname_exact%3A{term}".format(term=firstname["text"])
+            ),
         )
 
         lastname = fields["lastname"][0]
         self.assertTrue({"text", "count", "narrow_url"} <= set(lastname))
         self.assertEqual(
             lastname["narrow_url"],
-            self.build_absolute_uri("/search-person-facet/facets/?selected_facets=lastname_exact%3A{term}".format(
-                term=lastname["text"]
-            ))
+            self.build_absolute_uri(
+                "/search-person-facet/facets/?selected_facets=lastname_exact%3A{term}".format(term=lastname["text"])
+            ),
         )
 
     def test_serializer_facet_date_result(self):
@@ -500,7 +500,9 @@ class HaystackFacetSerializerTestCase(TestCase):
         self.assertEqual(created["count"], 100)
         self.assertEqual(
             created["narrow_url"],
-            self.build_absolute_uri("/search-person-facet/facets/?selected_facets=created_exact%3A2015-05-01+00%3A00%3A00")
+            self.build_absolute_uri(
+                "/search-person-facet/facets/?selected_facets=created_exact%3A2015-05-01+00%3A00%3A00"
+            ),
         )
 
     def test_serializer_facet_queries_result(self):
@@ -511,7 +513,7 @@ class HaystackFacetSerializerTestCase(TestCase):
         response = self.client.get(
             path="/search-person-facet/facets/",
             data=QueryDict("selected_facets=firstname_exact:John&selected_facets=lastname_exact:McClane"),
-            format="json"
+            format="json",
         )
         self.assertEqual(response.data["queries"], {})
 
@@ -522,8 +524,10 @@ class HaystackFacetSerializerTestCase(TestCase):
         self.assertEqual(response.data["fields"]["firstname"][0]["count"], 1)
         self.assertEqual(
             response.data["fields"]["firstname"][0]["narrow_url"],
-            self.build_absolute_uri("/search-person-facet/facets/?selected_facets=firstname_exact%3AJohn"
-                                    "&selected_facets=lastname_exact%3AMcClane")
+            self.build_absolute_uri(
+                "/search-person-facet/facets/?selected_facets=firstname_exact%3AJohn"
+                "&selected_facets=lastname_exact%3AMcClane"
+            ),
         )
 
         self.assertEqual(len(response.data["fields"]["lastname"]), 1)
@@ -531,8 +535,10 @@ class HaystackFacetSerializerTestCase(TestCase):
         self.assertEqual(response.data["fields"]["lastname"][0]["count"], 1)
         self.assertEqual(
             response.data["fields"]["lastname"][0]["narrow_url"],
-            self.build_absolute_uri("/search-person-facet/facets/?selected_facets=firstname_exact%3AJohn"
-                                    "&selected_facets=lastname_exact%3AMcClane")
+            self.build_absolute_uri(
+                "/search-person-facet/facets/?selected_facets=firstname_exact%3AJohn"
+                "&selected_facets=lastname_exact%3AMcClane"
+            ),
         )
 
         self.assertTrue("created" in response.data["dates"])
@@ -541,22 +547,26 @@ class HaystackFacetSerializerTestCase(TestCase):
         self.assertEqual(response.data["dates"]["created"][0]["count"], 1)
         self.assertEqual(
             response.data["dates"]["created"][0]["narrow_url"],
-            self.build_absolute_uri("/search-person-facet/facets/?selected_facets=created_exact%3A2015-05-01+00%3A00%3A00"
-                                    "&selected_facets=firstname_exact%3AJohn&selected_facets=lastname_exact%3AMcClane"
-                                    )
+            self.build_absolute_uri(
+                "/search-person-facet/facets/?selected_facets=created_exact%3A2015-05-01+00%3A00%3A00"
+                "&selected_facets=firstname_exact%3AJohn&selected_facets=lastname_exact%3AMcClane"
+            ),
         )
 
     def test_serializer_raise_without_meta_class(self):
         try:
+
             class FacetSerializer(HaystackFacetSerializer):
                 pass
+
             self.fail("Did not fail when defining a Serializer without a Meta class")
         except ImproperlyConfigured as e:
-            self.assertEqual(str(e), "%s must implement a Meta class or have the property _abstract" % "FacetSerializer")
+            self.assertEqual(
+                str(e), "%s must implement a Meta class or have the property _abstract" % "FacetSerializer"
+            )
 
 
 class HaystackSerializerMixinTestCase(WarningTestCaseMixin, TestCase):
-
     fixtures = ["mockperson"]
 
     def setUp(self):
@@ -565,12 +575,14 @@ class HaystackSerializerMixinTestCase(WarningTestCaseMixin, TestCase):
         class MockPersonSerializer(serializers.ModelSerializer):
             class Meta:
                 model = MockPerson
-                fields = ('id', 'firstname', 'lastname', 'created', 'updated')
-                read_only_fields = ('created', 'updated')
+                fields = ("id", "firstname", "lastname", "created", "updated")
+                read_only_fields = ("created", "updated")
 
         class Serializer1(HaystackSerializerMixin, MockPersonSerializer):
             class Meta(MockPersonSerializer.Meta):
-                search_fields = ['text', ]
+                search_fields = [
+                    "text",
+                ]
 
         class Viewset1(HaystackViewSet):
             serializer_class = Serializer1
@@ -586,18 +598,19 @@ class HaystackSerializerMixinTestCase(WarningTestCaseMixin, TestCase):
         serializer = self.serializer1(instance=objs, many=True)
         self.assertEqual(
             json.loads(json.dumps(serializer.data)),
-            [{
-                "id": 1,
-                "firstname": "Abel",
-                "lastname": "Foreman",
-                "created": "2015-05-19T10:48:08.686000Z",
-                "updated": "2016-04-24T16:02:59.378000Z"
-            }]
+            [
+                {
+                    "id": 1,
+                    "firstname": "Abel",
+                    "lastname": "Foreman",
+                    "created": "2015-05-19T10:48:08.686000Z",
+                    "updated": "2016-04-24T16:02:59.378000Z",
+                }
+            ],
         )
 
 
 class HaystackMultiSerializerTestCase(WarningTestCaseMixin, TestCase):
-
     fixtures = ["mockperson", "mockpet"]
 
     def setUp(self):
@@ -607,19 +620,16 @@ class HaystackMultiSerializerTestCase(WarningTestCaseMixin, TestCase):
         class MockPersonSerializer(HaystackSerializer):
             class Meta:
                 index_classes = [MockPersonIndex]
-                fields = ('text', 'firstname', 'lastname', 'description')
+                fields = ("text", "firstname", "lastname", "description")
 
         class MockPetSerializer(HaystackSerializer):
             class Meta:
                 index_classes = [MockPetIndex]
-                exclude = ('description', 'autocomplete')
+                exclude = ("description", "autocomplete")
 
         class Serializer1(HaystackSerializer):
             class Meta:
-                serializers = {
-                    MockPersonIndex: MockPersonSerializer,
-                    MockPetIndex: MockPetSerializer
-                }
+                serializers = {MockPersonIndex: MockPersonSerializer, MockPetIndex: MockPetSerializer}
 
         self.serializer1 = Serializer1
 
@@ -632,23 +642,19 @@ class HaystackMultiSerializerTestCase(WarningTestCaseMixin, TestCase):
         serializer = self.serializer1(instance=objs, many=True)
         self.assertEqual(
             json.loads(json.dumps(serializer.data)),
-            [{
-                "has_rabies": True,
-                "text": "Zane",
-                "name": "Zane",
-                "species": "Dog"
-            },
-            {
-                "text": "Zane Griffith\n",
-                "firstname": "Zane",
-                "lastname": "Griffith",
-                "description": "Zane is a nice chap!"
-            }]
+            [
+                {"has_rabies": True, "text": "Zane", "name": "Zane", "species": "Dog"},
+                {
+                    "text": "Zane Griffith\n",
+                    "firstname": "Zane",
+                    "lastname": "Griffith",
+                    "description": "Zane is a nice chap!",
+                },
+            ],
         )
 
 
 class TestHaystackSerializerMeta(SimpleTestCase):
-
     def test_abstract_not_inherited(self):
         class Base(serializers.Serializer, metaclass=HaystackSerializerMeta):
             _abstract = True
@@ -661,21 +667,21 @@ class TestHaystackSerializerMeta(SimpleTestCase):
 
 
 class TestMeta(SimpleTestCase):
-
     def test_inheritance(self):
         """
         Tests that Meta fields are correctly overriden by subclasses.
         """
+
         class Serializer(HaystackSerializer):
             class Meta:
-                fields = ('overriden_fields',)
+                fields = ("overriden_fields",)
 
-        self.assertEqual(Serializer.Meta.fields, ('overriden_fields',))
+        self.assertEqual(Serializer.Meta.fields, ("overriden_fields",))
 
     def test_default_attrs(self):
         class Serializer(HaystackSerializer):
             class Meta:
-                fields = ('overriden_fields',)
+                fields = ("overriden_fields",)
 
         self.assertEqual(Serializer.Meta.exclude, tuple())
 
@@ -683,8 +689,9 @@ class TestMeta(SimpleTestCase):
         def create_subclass():
             class Serializer(HaystackSerializer):
                 class Meta:
-                    fields = ('include_field',)
-                    exclude = ('exclude_field',)
+                    fields = ("include_field",)
+                    exclude = ("exclude_field",)
+
             return Serializer
 
         self.assertRaises(ImproperlyConfigured, create_subclass)

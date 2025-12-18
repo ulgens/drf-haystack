@@ -5,23 +5,22 @@ import tests.mockapp.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('mockapp', '0004_load_fixtures'),
+        ("mockapp", "0004_load_fixtures"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MockAllField',
+            name="MockAllField",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('charfield', models.CharField(max_length=100)),
-                ('integerfield', models.IntegerField()),
-                ('floatfield', models.FloatField()),
-                ('decimalfield', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('boolfield', models.BooleanField(default=False)),
-                ('datefield', models.DateField(default=tests.mockapp.models.get_random_date)),
-                ('datetimefield', models.DateTimeField(default=tests.mockapp.models.get_random_datetime)),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("charfield", models.CharField(max_length=100)),
+                ("integerfield", models.IntegerField()),
+                ("floatfield", models.FloatField()),
+                ("decimalfield", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("boolfield", models.BooleanField(default=False)),
+                ("datefield", models.DateField(default=tests.mockapp.models.get_random_date)),
+                ("datetimefield", models.DateTimeField(default=tests.mockapp.models.get_random_datetime)),
             ],
         ),
     ]

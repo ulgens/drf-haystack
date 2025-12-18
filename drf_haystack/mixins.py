@@ -37,7 +37,7 @@ class FacetMixin:
     facet_filter_backends = [HaystackFacetFilter]
     facet_serializer_class = None
     facet_objects_serializer_class = None
-    facet_query_params_text = 'selected_facets'
+    facet_query_params_text = "selected_facets"
 
     @action(detail=False, methods=["get"], url_path="facets")
     def facets(self, request):
@@ -48,7 +48,6 @@ class FacetMixin:
         queryset = self.filter_facet_queryset(self.get_queryset())
 
         for facet in request.query_params.getlist(self.facet_query_params_text):
-
             if ":" not in facet:
                 continue
 
@@ -95,8 +94,7 @@ class FacetMixin:
         if self.facet_serializer_class is None:
             raise AttributeError(
                 "%(cls)s should either include a `facet_serializer_class` attribute, "
-                "or override %(cls)s.get_facet_serializer_class() method." %
-                {"cls": self.__class__.__name__}
+                "or override %(cls)s.get_facet_serializer_class() method." % {"cls": self.__class__.__name__}
             )
         return self.facet_serializer_class
 

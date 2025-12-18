@@ -9,7 +9,7 @@ def get_random_date(start=date(1950, 1, 1), end=date.today()):
     """
     :return a random date between `start` and `end`
     """
-    delta = ((end - start).days * 24 * 60 * 60)
+    delta = (end - start).days * 24 * 60 * 60
     return start + timedelta(seconds=randrange(delta))
 
 
@@ -17,12 +17,11 @@ def get_random_datetime(start=datetime(1950, 1, 1, 0, 0), end=datetime.today()):
     """
     :return a random datetime
     """
-    delta = ((end - start).total_seconds())
+    delta = (end - start).total_seconds()
     return (start + timedelta(seconds=randint(0, int(delta)))).replace(tzinfo=pytz.UTC)
 
 
 class MockLocation(models.Model):
-
     latitude = models.FloatField()
     longitude = models.FloatField()
     address = models.CharField(max_length=100)
@@ -46,7 +45,6 @@ class MockLocation(models.Model):
 
 
 class MockPerson(models.Model):
-
     firstname = models.CharField(max_length=20)
     lastname = models.CharField(max_length=20)
     birthdate = models.DateField(null=True, default=get_random_date)
@@ -59,7 +57,6 @@ class MockPerson(models.Model):
 
 
 class MockPet(models.Model):
-
     name = models.CharField(max_length=20)
     species = models.CharField(max_length=20)
 
@@ -71,7 +68,6 @@ class MockPet(models.Model):
 
 
 class MockAllField(models.Model):
-
     charfield = models.CharField(max_length=100)
     integerfield = models.IntegerField()
     floatfield = models.FloatField()

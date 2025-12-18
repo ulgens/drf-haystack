@@ -20,9 +20,16 @@ from rest_framework.fields import empty
 from rest_framework.utils.field_mapping import ClassLookupDict, get_field_kwargs
 
 from drf_haystack.fields import (
-    HaystackBooleanField, HaystackCharField, HaystackDateField, HaystackDateTimeField,
-    HaystackDecimalField, HaystackFloatField, HaystackIntegerField, HaystackMultiValueField,
-    FacetDictField, FacetListField
+    HaystackBooleanField,
+    HaystackCharField,
+    HaystackDateField,
+    HaystackDateTimeField,
+    HaystackDecimalField,
+    HaystackFloatField,
+    HaystackIntegerField,
+    HaystackMultiValueField,
+    FacetDictField,
+    FacetListField,
 )
 
 
@@ -57,7 +64,6 @@ class Meta(type):
 
 
 class HaystackSerializerMeta(serializers.SerializerMetaclass):
-
     """
     Metaclass for the HaystackSerializer that ensures that all declared subclasses implemented a Meta.
     """
@@ -110,8 +116,9 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
         super().__init__(instance, data, **kwargs)
 
         if not self.Meta.index_classes and not self.Meta.serializers:
-            raise ImproperlyConfigured("You must set either the 'index_classes' or 'serializers' "
-                                       "attribute on the serializer Meta class.")
+            raise ImproperlyConfigured(
+                "You must set either the 'index_classes' or 'serializers' attribute on the serializer Meta class."
+            )
 
         if not self.instance:
             self.instance = EmptySearchQuerySet()
@@ -156,7 +163,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
         """
         cls_name = index_cls.__name__
         aliases = self.Meta.index_aliases
-        return aliases.get(cls_name, cls_name.split('.')[-1])
+        return aliases.get(cls_name, cls_name.split(".")[-1])
 
     def get_fields(self):
         """
@@ -199,7 +206,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
                 # in order to correctly instantiate the serializer field.
                 model = index_cls().get_model()
                 kwargs = self._get_default_field_kwargs(model, field_type)
-                kwargs['prefix_field_names'] = prefix_field_names
+                kwargs["prefix_field_names"] = prefix_field_names
                 field_mapping[field_name] = self._field_mapping[field_type](**kwargs)
 
         # Add any explicitly declared fields. They *will* override any index fields
@@ -302,10 +309,9 @@ class FacetFieldSerializer(serializers.Serializer):
             raise AttributeError(
                 "%(root_cls)s is missing a `paginate_by_param` attribute. "
                 "Define a %(root_cls)s.paginate_by_param or override "
-                "%(cls)s.get_paginate_by_param()." % {
-                    "root_cls": self.root.__class__.__name__,
-                    "cls": self.__class__.__name__
-                })
+                "%(cls)s.get_paginate_by_param()."
+                % {"root_cls": self.root.__class__.__name__, "cls": self.__class__.__name__}
+            )
 
     def get_text(self, instance):
         """
@@ -378,10 +384,11 @@ class HaystackFacetSerializer(serializers.Serializer, metaclass=HaystackSerializ
         """
         field_mapping = OrderedDict()
         for field, data in self.instance.items():
-            field_mapping.update(
-                {field: self.facet_dict_field_class(
-                    child=self.facet_list_field_class(child=self.facet_field_serializer_class(data)), required=False)}
-            )
+            field_mapping.update({
+                field: self.facet_dict_field_class(
+                    child=self.facet_list_field_class(child=self.facet_field_serializer_class(data)), required=False
+                )
+            })
 
         if self.serialize_objects is True:
             field_mapping["objects"] = serializers.SerializerMethodField()
@@ -402,7 +409,7 @@ class HaystackFacetSerializer(serializers.Serializer, metaclass=HaystackSerializ
                 ("count", self.get_count(queryset)),
                 ("next", view.paginator.get_next_link()),
                 ("previous", view.paginator.get_previous_link()),
-                ("results", serializer.data)
+                ("results", serializer.data),
             ])
 
         serializer = view.get_serializer(queryset, many=True)
@@ -451,8 +458,7 @@ class HighlighterMixin:
         if not self.highlighter_class:
             raise ImproperlyConfigured(
                 "%(cls)s is missing a highlighter_class. Define %(cls)s.highlighter_class, "
-                "or override %(cls)s.get_highlighter()." %
-                {"cls": self.__class__.__name__}
+                "or override %(cls)s.get_highlighter()." % {"cls": self.__class__.__name__}
             )
         return self.highlighter_class
 
@@ -477,14 +483,17 @@ class HighlighterMixin:
         ret = super().to_representation(instance)
         terms = self.get_terms(ret)
         if terms:
-            highlighter = self.get_highlighter()(terms, **{
-                "html_tag": self.highlighter_html_tag,
-                "css_class": self.highlighter_css_class,
-                "max_length": self.highlighter_max_length
-            })
+            highlighter = self.get_highlighter()(
+                terms,
+                **{
+                    "html_tag": self.highlighter_html_tag,
+                    "css_class": self.highlighter_css_class,
+                    "max_length": self.highlighter_max_length,
+                },
+            )
             document_field = self.get_document_field(instance)
             if highlighter and document_field:
                 # Handle case where this data is None, but highlight expects it to be a string
-                data_to_highlight = getattr(instance, self.highlighter_field or document_field) or ''
+                data_to_highlight = getattr(instance, self.highlighter_field or document_field) or ""
                 ret["highlighted"] = highlighter.highlight(data_to_highlight)
         return ret

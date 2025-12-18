@@ -26,6 +26,7 @@ def load_data(apps, schema_editor):
         for obj in objects:
             obj.save()
 
+
 def unload_data(apps, schema_editor):
     """
     Unload fixtures for MockPerson, MockPet and MockLocation
@@ -41,7 +42,6 @@ def unload_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("mockapp", "0001_initial"),
         ("mockapp", "0002_mockperson"),
@@ -49,6 +49,4 @@ class Migration(migrations.Migration):
         ("mockapp", "0003_mockpet"),
     ]
 
-    operations = [
-        migrations.RunPython(load_data, reverse_code=unload_data)
-    ]
+    operations = [migrations.RunPython(load_data, reverse_code=unload_data)]

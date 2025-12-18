@@ -7,6 +7,7 @@ old_config = None
 os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 
 import django
+
 if hasattr(django, "setup"):
     django.setup()
 
@@ -19,23 +20,32 @@ def _geospatial_support():
         return False
     else:
         return True
+
+
 geospatial_support = _geospatial_support()
 
 
 def _restframework_version():
     import rest_framework
+
     return tuple(map(int, rest_framework.VERSION.split(".")))
+
+
 restframework_version = _restframework_version()
 
 
 def _elasticsearch_version():
     import elasticsearch
+
     return elasticsearch.VERSION
+
+
 elasticsearch_version = _elasticsearch_version()
 
 
 def setup():
     from django.test.runner import DiscoverRunner
+
     global test_runner
     global old_config
 
