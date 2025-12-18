@@ -1,7 +1,6 @@
 import operator
 from functools import reduce
 
-import six
 from django.core.exceptions import ImproperlyConfigured
 from haystack.query import SearchQuerySet
 from rest_framework.filters import BaseFilterBackend, OrderingFilter
@@ -111,7 +110,7 @@ class HaystackAutocompleteFilter(HaystackFilter):
                 bit = queryset.query.clean(word.strip())
                 kwargs = {field_name: bit}
                 query_bits.append(view.query_object(**kwargs))
-        return six.moves.reduce(operator.and_, filter(lambda x: x, query_bits))
+        return reduce(operator.and_, filter(lambda x: x, query_bits))
 
 
 class HaystackGEOSpatialFilter(BaseHaystackFilterBackend):

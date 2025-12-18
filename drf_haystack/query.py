@@ -1,8 +1,8 @@
 import operator
 import warnings
+from functools import reduce
 from itertools import chain
 
-import six
 from dateutil import parser
 
 from drf_haystack import constants
@@ -146,20 +146,20 @@ class FilterQueryBuilder(BaseQueryBuilder):
 
             param_queries = [pq for pq in param_queries if pq]
             if len(param_queries) > 0:
-                term = six.moves.reduce(self.get_same_param_operator(param), param_queries)
+                term = reduce(self.get_same_param_operator(param), param_queries)
                 if excluding_term:
                     applicable_exclusions.append(term)
                 else:
                     applicable_filters.append(term)
 
         applicable_filters = (
-            six.moves.reduce(self.default_operator, filter(lambda x: x, applicable_filters))
+            reduce(self.default_operator, filter(lambda x: x, applicable_filters))
             if applicable_filters
             else self.view.query_object()
         )
 
         applicable_exclusions = (
-            six.moves.reduce(self.default_operator, filter(lambda x: x, applicable_exclusions))
+            reduce(self.default_operator, filter(lambda x: x, applicable_exclusions))
             if applicable_exclusions
             else self.view.query_object()
         )
