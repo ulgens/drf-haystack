@@ -6,31 +6,30 @@
 import json
 from datetime import datetime, timedelta
 
-from django.urls import path, include
 from django.core.exceptions import ImproperlyConfigured
 from django.http import QueryDict
-from django.test import TestCase, SimpleTestCase, override_settings
+from django.test import SimpleTestCase, TestCase, override_settings
+from django.urls import include, path
 from haystack.query import SearchQuerySet
-
 from rest_framework import serializers
 from rest_framework.fields import CharField, IntegerField
 from rest_framework.routers import DefaultRouter
 from rest_framework.test import APIRequestFactory, APITestCase
 
 from drf_haystack import fields
+from drf_haystack.mixins import FacetMixin, MoreLikeThisMixin
 from drf_haystack.serializers import (
-    HighlighterMixin,
-    HaystackSerializer,
-    HaystackSerializerMixin,
     HaystackFacetSerializer,
+    HaystackSerializer,
     HaystackSerializerMeta,
+    HaystackSerializerMixin,
+    HighlighterMixin,
 )
 from drf_haystack.viewsets import HaystackViewSet
-from drf_haystack.mixins import MoreLikeThisMixin, FacetMixin
 
 from .mixins import WarningTestCaseMixin
-from .mockapp.models import MockPerson, MockAllField
-from .mockapp.search_indexes import MockPersonIndex, MockPetIndex, MockAllFieldIndex
+from .mockapp.models import MockAllField, MockPerson
+from .mockapp.search_indexes import MockAllFieldIndex, MockPersonIndex, MockPetIndex
 
 factory = APIRequestFactory()
 

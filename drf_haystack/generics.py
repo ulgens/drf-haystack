@@ -1,6 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
-
 from haystack.backends import SQ
 from haystack.query import SearchQuerySet
 from rest_framework.generics import GenericAPIView

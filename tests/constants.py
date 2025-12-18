@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 from django.conf import settings
 
 with open(os.path.join(settings.BASE_DIR, "mockapp", "fixtures", "mocklocation.json")) as f:

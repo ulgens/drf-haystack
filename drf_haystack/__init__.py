@@ -1,6 +1,5 @@
 import warnings
 
-
 __title__ = "drf-haystack"
 __version__ = "1.9.1"
 __author__ = "Rolf Haavard Blindheim"

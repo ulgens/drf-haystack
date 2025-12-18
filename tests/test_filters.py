@@ -5,17 +5,12 @@
 
 import json
 from datetime import date, datetime, timedelta
-
 from unittest import skipIf
 
 from django.test import TestCase
-
-from rest_framework import status
-from rest_framework import serializers
+from rest_framework import serializers, status
 from rest_framework.test import APIRequestFactory
 
-from drf_haystack.viewsets import HaystackViewSet
-from drf_haystack.serializers import HaystackSerializer, HaystackFacetSerializer
 from drf_haystack.filters import (
     HaystackAutocompleteFilter,
     HaystackBoostFilter,
@@ -26,8 +21,10 @@ from drf_haystack.filters import (
     HaystackOrderingFilter,
 )
 from drf_haystack.mixins import FacetMixin
+from drf_haystack.serializers import HaystackFacetSerializer, HaystackSerializer
+from drf_haystack.viewsets import HaystackViewSet
 
-from . import geospatial_support, elasticsearch_version
+from . import elasticsearch_version, geospatial_support
 from .constants import MOCKLOCATION_DATA_SET_SIZE, MOCKPERSON_DATA_SET_SIZE
 from .mixins import WarningTestCaseMixin
 from .mockapp.models import MockAllField, MockLocation, MockPerson

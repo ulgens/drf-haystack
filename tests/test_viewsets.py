@@ -6,25 +6,22 @@
 import json
 from unittest import skipIf
 
-from django.test import TestCase
 from django.contrib.auth.models import User
-
+from django.test import TestCase
 from haystack.query import SearchQuerySet
-
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.routers import SimpleRouter
 from rest_framework.serializers import Serializer
-from rest_framework.test import force_authenticate, APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
 
+from drf_haystack.mixins import FacetMixin, MoreLikeThisMixin
+from drf_haystack.serializers import HaystackFacetSerializer, HaystackSerializer
 from drf_haystack.viewsets import HaystackViewSet
-from drf_haystack.serializers import HaystackSerializer, HaystackFacetSerializer
-from drf_haystack.mixins import MoreLikeThisMixin, FacetMixin
 
 from . import restframework_version
 from .mockapp.models import MockPerson, MockPet
 from .mockapp.search_indexes import MockPersonIndex, MockPetIndex
-
 
 factory = APIRequestFactory()
 

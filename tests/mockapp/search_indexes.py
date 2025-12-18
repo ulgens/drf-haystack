@@ -1,7 +1,7 @@
 from django.utils import timezone
 from haystack import indexes
 
-from .models import MockLocation, MockPerson, MockPet, MockAllField
+from .models import MockAllField, MockLocation, MockPerson, MockPet
 
 
 class MockLocationIndex(indexes.SearchIndex, indexes.Indexable):

@@ -1,9 +1,8 @@
 import operator
-import six
 import warnings
 from itertools import chain
 
-
+import six
 from dateutil import parser
 
 from drf_haystack import constants

@@ -1,5 +1,6 @@
 import os
 from importlib.util import find_spec
+
 import django
 
 test_runner = None

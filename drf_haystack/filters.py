@@ -1,12 +1,12 @@
 import operator
-import six
 from functools import reduce
 
+import six
 from django.core.exceptions import ImproperlyConfigured
 from haystack.query import SearchQuerySet
 from rest_framework.filters import BaseFilterBackend, OrderingFilter
 
-from drf_haystack.query import BoostQueryBuilder, FilterQueryBuilder, FacetQueryBuilder, SpatialQueryBuilder
+from drf_haystack.query import BoostQueryBuilder, FacetQueryBuilder, FilterQueryBuilder, SpatialQueryBuilder
 
 
 class BaseHaystackFilterBackend(BaseFilterBackend):

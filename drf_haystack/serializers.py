@@ -1,23 +1,23 @@
 import copy
-from itertools import chain
 from datetime import datetime
+from itertools import chain
 
 try:
     from collections import OrderedDict
 except ImportError:
     from django.utils.datastructures import SortedDict as OrderedDict
 
-from django.core.exceptions import ImproperlyConfigured, FieldDoesNotExist
-
+from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
 from haystack import fields as haystack_fields
 from haystack.query import EmptySearchQuerySet
 from haystack.utils.highlighting import Highlighter
-
 from rest_framework import serializers
 from rest_framework.fields import empty
 from rest_framework.utils.field_mapping import ClassLookupDict, get_field_kwargs
 
 from drf_haystack.fields import (
+    FacetDictField,
+    FacetListField,
     HaystackBooleanField,
     HaystackCharField,
     HaystackDateField,
@@ -26,8 +26,6 @@ from drf_haystack.fields import (
     HaystackFloatField,
     HaystackIntegerField,
     HaystackMultiValueField,
-    FacetDictField,
-    FacetListField,
 )
 
 

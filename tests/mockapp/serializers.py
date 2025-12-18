@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
+
 from rest_framework.serializers import HyperlinkedIdentityField
 
-from drf_haystack.serializers import HaystackSerializer, HaystackFacetSerializer, HighlighterMixin
-from .search_indexes import MockPersonIndex, MockLocationIndex
+from drf_haystack.serializers import HaystackFacetSerializer, HaystackSerializer, HighlighterMixin
+
+from .search_indexes import MockLocationIndex, MockPersonIndex
 
 
 class SearchSerializer(HaystackSerializer):

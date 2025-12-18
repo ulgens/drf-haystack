@@ -1,7 +1,7 @@
-import pytz
 from datetime import date, datetime, timedelta
-from random import randrange, randint
+from random import randint, randrange
 
+import pytz
 from django.db import models
 
 

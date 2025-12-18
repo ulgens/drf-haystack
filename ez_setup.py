@@ -14,12 +14,12 @@ the appropriate options to ``use_setuptools()``.
 This file can also be run as a script to install or upgrade setuptools.
 """
 
+import fnmatch
 import os
 import sys
-import time
-import fnmatch
-import tempfile
 import tarfile
+import tempfile
+import time
 from distutils import log
 
 try:
