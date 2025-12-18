@@ -4,3 +4,6 @@ target-version = "py38"
 
 [format]
 preview = true
+
+[lint]
+preview = true
