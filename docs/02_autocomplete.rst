@@ -45,4 +45,3 @@ An example using the autocomplete filter might look something like this.
         index_models = [Location]
         serializer_class = AutocompleteSerializer
         filter_backends = [HaystackAutocompleteFilter]
-

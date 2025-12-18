@@ -6,7 +6,7 @@
 The current maintainers are no longer actively using `drf-haystack` and would
 like to [hand over the project to other developers](https://github.com/rhblind/drf-haystack/issues/146) who are using the package.
 
-We will still do the bare minimum maintenance of keeping dependency references 
+We will still do the bare minimum maintenance of keeping dependency references
 up to date with new releases of related packages **until January 1st 2026**.
 
 If by that time no new maintainers have joined to take over the project, we
