@@ -7,3 +7,7 @@ preview = true
 
 [lint]
 preview = true
+extend-select = [
+    # https://docs.astral.sh/ruff/rules/#isort-i
+    "I",
+]
