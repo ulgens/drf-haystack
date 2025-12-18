@@ -6,7 +6,7 @@ class DRFHaystackFieldMixin:
     prefix_field_names = False
 
     def __init__(self, **kwargs):
-        self.prefix_field_names = kwargs.pop('prefix_field_names', False)
+        self.prefix_field_names = kwargs.pop("prefix_field_names", False)
         super().__init__(**kwargs)
 
     def bind(self, field_name, parent):
@@ -23,8 +23,7 @@ class DRFHaystackFieldMixin:
         assert self.source != field_name, (
             "It is redundant to specify `source='%s'` on field '%s' in "
             "serializer '%s', because it is the same as the field name. "
-            "Remove the `source` keyword argument." %
-            (field_name, self.__class__.__name__, parent.__class__.__name__)
+            "Remove the `source` keyword argument." % (field_name, self.__class__.__name__, parent.__class__.__name__)
         )
 
         self.field_name = field_name
@@ -32,7 +31,7 @@ class DRFHaystackFieldMixin:
 
         # `self.label` should default to being based on the field name.
         if self.label is None:
-            self.label = field_name.replace('_', ' ').capitalize()
+            self.label = field_name.replace("_", " ").capitalize()
 
         # self.source should default to being the same as the field name.
         if self.source is None:
@@ -40,10 +39,10 @@ class DRFHaystackFieldMixin:
 
         # self.source_attrs is a list of attributes that need to be looked up
         # when serializing the instance, or populating the validated data.
-        if self.source == '*':
+        if self.source == "*":
             self.source_attrs = []
         else:
-            self.source_attrs = self.source.split('.')
+            self.source_attrs = self.source.split(".")
 
     def convert_field_name(self, field_name):
         if not self.prefix_field_names:
@@ -91,10 +90,7 @@ class FacetDictField(fields.DictField):
     """
 
     def to_representation(self, value):
-        return {
-            str(key): self.child.to_representation(key, val)
-             for key, val in value.items()
-        }
+        return {str(key): self.child.to_representation(key, val) for key, val in value.items()}
 
 
 class FacetListField(fields.ListField):

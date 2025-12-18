@@ -2,24 +2,22 @@ from django.db import models, migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('mockapp', '0001_initial'),
-        ('mockapp', '0002_mockperson'),
+        ("mockapp", "0001_initial"),
+        ("mockapp", "0002_mockperson"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MockPet',
+            name="MockPet",
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=20)),
-                ('species', models.CharField(max_length=20)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
+                ("id", models.AutoField(auto_created=True, verbose_name="ID", primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=20)),
+                ("species", models.CharField(max_length=20)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
             ],
-            options={
-            },
+            options={},
             bases=(models.Model,),
         ),
     ]

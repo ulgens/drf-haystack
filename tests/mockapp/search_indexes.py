@@ -5,7 +5,6 @@ from .models import MockLocation, MockPerson, MockPet, MockAllField
 
 
 class MockLocationIndex(indexes.SearchIndex, indexes.Indexable):
-
     text = indexes.CharField(document=True, use_template=True)
     address = indexes.CharField(model_attr="address")
     city = indexes.CharField(model_attr="city")
@@ -16,21 +15,16 @@ class MockLocationIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_autocomplete(obj):
-        return " ".join((
-            obj.address, obj.city, obj.zip_code
-        ))
+        return " ".join((obj.address, obj.city, obj.zip_code))
 
     def get_model(self):
         return MockLocation
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(
-            created__lte=timezone.now()
-        )
+        return self.get_model().objects.filter(created__lte=timezone.now())
 
 
 class MockPersonIndex(indexes.SearchIndex, indexes.Indexable):
-
     text = indexes.CharField(document=True, use_template=True)
     firstname = indexes.CharField(model_attr="firstname", faceted=True)
     lastname = indexes.CharField(model_attr="lastname", faceted=True)
@@ -62,13 +56,10 @@ class MockPersonIndex(indexes.SearchIndex, indexes.Indexable):
         return MockPerson
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(
-            created__lte=timezone.now()
-        )
+        return self.get_model().objects.filter(created__lte=timezone.now())
 
 
 class MockPetIndex(indexes.SearchIndex, indexes.Indexable):
-
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr="name")
     species = indexes.CharField(model_attr="species")
@@ -94,7 +85,6 @@ class MockPetIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class MockAllFieldIndex(indexes.SearchIndex, indexes.Indexable):
-
     text = indexes.CharField(document=True, use_template=False)
     charfield = indexes.CharField(model_attr="charfield")
     integerfield = indexes.IntegerField(model_attr="integerfield")
@@ -107,7 +97,7 @@ class MockAllFieldIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_multivaluefield(obj):
-        return obj.charfield.split(' ', 1)
+        return obj.charfield.split(" ", 1)
 
     def get_model(self):
         return MockAllField
