@@ -4,6 +4,7 @@ import os
 import re
 import sys
 from datetime import date
+from importlib.util import find_spec
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -11,15 +12,15 @@ from datetime import date
 sys.path.insert(0, os.path.abspath(".."))
 os.environ["RUNTIME_ENV"] = "TESTSUITE"
 os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
-try:
-    import django
-    import sphinx_rtd_theme
 
+if find_spec("django") and find_spec("sphinx_rtd_theme"):
     use_sphinx_rtd_theme = True
+
+    import django
+
     if hasattr(django, "setup"):
         django.setup()
-
-except ImportError:
+else:
     use_sphinx_rtd_theme = os.environ.get("READTHEDOCS", False)
 
 

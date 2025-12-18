@@ -1,5 +1,5 @@
 import os
-from django.core.exceptions import ImproperlyConfigured
+from importlib.util import find_spec
 
 test_runner = None
 old_config = None
@@ -13,13 +13,7 @@ if hasattr(django, "setup"):
 
 
 def _geospatial_support():
-    try:
-        import geopy
-        from haystack.utils.geo import Point
-    except (ImportError, ImproperlyConfigured):
-        return False
-    else:
-        return True
+    return find_spec("geopy") and find_spec("haystack.utils.geo.Point")
 
 
 geospatial_support = _geospatial_support()
