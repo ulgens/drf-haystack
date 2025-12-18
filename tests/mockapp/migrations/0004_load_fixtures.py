@@ -1,7 +1,7 @@
 import os
 
 from django.core import serializers
-from django.db import models, migrations
+from django.db import migrations
 
 
 def load_data(apps, schema_editor):

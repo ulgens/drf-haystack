@@ -99,5 +99,5 @@ try:
         HAYSTACK_CONNECTIONS["default"].update({
             "ENGINE": "haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine"
         })
-except ImportError as e:
+except ImportError:
     del HAYSTACK_CONNECTIONS["default"]  # This will intentionally cause everything to break!

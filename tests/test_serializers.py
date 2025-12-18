@@ -6,7 +6,6 @@
 import json
 from datetime import datetime, timedelta
 
-import six
 from django.urls import path, include
 from django.core.exceptions import ImproperlyConfigured
 from django.http import QueryDict

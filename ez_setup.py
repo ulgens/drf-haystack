@@ -316,7 +316,7 @@ def _create_fake_setuptools_pkg_info(placeholder):
         log.warn("Could not find the install location")
         return
     pyver = f"{sys.version_info[0]}.{sys.version_info[1]}"
-    setuptools_file = "setuptools-%s-py%s.egg-info" % (SETUPTOOLS_FAKED_VERSION, pyver)
+    setuptools_file = f"setuptools-{SETUPTOOLS_FAKED_VERSION}-py{pyver}.egg-info"
     pkg_info = os.path.join(placeholder, setuptools_file)
     if os.path.exists(pkg_info):
         log.warn("%s already exists", pkg_info)

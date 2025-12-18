@@ -210,7 +210,7 @@ class FacetQueryBuilder(BaseQueryBuilder):
                 if not all(("start_date", "end_date", "gap_by" in options)):
                     raise ValueError("Date faceting requires at least 'start_date', 'end_date' and 'gap_by' to be set.")
 
-                if not options["gap_by"] in valid_gap:
+                if options["gap_by"] not in valid_gap:
                     raise ValueError("The 'gap_by' parameter must be one of %s." % ", ".join(valid_gap))
 
                 options.setdefault("gap_amount", 1)

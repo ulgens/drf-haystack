@@ -2,16 +2,12 @@ from rest_framework.pagination import PageNumberPagination, LimitOffsetPaginatio
 
 from drf_haystack.filters import (
     HaystackFilter,
-    HaystackBoostFilter,
-    HaystackHighlightFilter,
-    HaystackAutocompleteFilter,
-    HaystackGEOSpatialFilter,
 )
 from drf_haystack.viewsets import HaystackViewSet
 from drf_haystack.mixins import FacetMixin, MoreLikeThisMixin
 
-from .models import MockPerson, MockLocation
-from .serializers import SearchSerializer, HighlighterSerializer, MoreLikeThisSerializer, MockPersonFacetSerializer
+from .models import MockPerson
+from .serializers import SearchSerializer, MoreLikeThisSerializer, MockPersonFacetSerializer
 
 
 class BasicPageNumberPagination(PageNumberPagination):

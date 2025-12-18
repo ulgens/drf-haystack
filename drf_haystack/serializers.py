@@ -1,6 +1,4 @@
 import copy
-import six
-import warnings
 from itertools import chain
 from datetime import datetime
 
