@@ -1,4 +1,4 @@
-FROM        python:3-alpine
+FROM        python:3-alpine@sha256:7af51ebeb83610fb69d633d5c61a2efb87efa4caf66b59862d624bb6ef788345
 
 ENV         DEBIAN_FRONTEND noninteractive
 ENV         PYTHONPATH /usr/local/src
