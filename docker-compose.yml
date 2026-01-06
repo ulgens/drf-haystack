@@ -1,7 +1,7 @@
 version: '2'
 services:
   elasticsearch2:
-    image: elasticsearch:2
+    image: elasticsearch:2@sha256:41ed3a1a16b63de740767944d5405843db00e55058626c22838f23b413aa4a39
     ports:
       - "9200:9200"
       - "9300:9300"
