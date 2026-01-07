@@ -39,7 +39,7 @@ Fresh [documentation available](https://drf-haystack.readthedocs.io/en/latest/) 
 Supported versions
 ------------------
 
-- Python 3.7 and above
+- Python 3.8 and above
 - Django >=4.2,<5.2
 - Haystack >=2.8,<3.4
 - Django REST Framework >=3.12.0,<3.16
