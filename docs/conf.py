@@ -63,7 +63,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "drf_haystack"
-copyright = "%d, Rolf Håvard Blindheim" % date.today().year
+copyright = f"{date.today().year}, Rolf Håvard Blindheim"
 author = "Rolf Håvard Blindheim"
 
 # The version info for the project you're documenting, acts as replacement for

@@ -149,7 +149,9 @@ class HaystackSerializerTestCase(WarningTestCaseMixin, TestCase):
 
             self.fail("Did not fail when defining a Serializer without a Meta class")
         except ImproperlyConfigured as e:
-            self.assertEqual(str(e), "%s must implement a Meta class or have the property _abstract" % "Serializer")
+            self.assertEqual(
+                str(e), "{} must implement a Meta class or have the property _abstract".format("Serializer")
+            )
 
     def test_serializer_gets_default_instance(self):
         serializer = self.serializer1(instance=None)
@@ -382,11 +384,8 @@ class HaystackSerializerHighlighterMixinTestCase(WarningTestCaseMixin, TestCase)
             self.assertEqual(
                 result["highlighted"],
                 " ".join((
-                    '<{tag} class="{css_class}">Jeremy</{tag}>'.format(
-                        tag=self.view1.serializer_class.highlighter_html_tag,
-                        css_class=self.view1.serializer_class.highlighter_css_class,
-                    ),
-                    "%s" % "is a nice chap!",
+                    f'<{self.view1.serializer_class.highlighter_html_tag} class="{self.view1.serializer_class.highlighter_css_class}">Jeremy</{self.view1.serializer_class.highlighter_html_tag}>',
+                    "{}".format("is a nice chap!"),
                 )),
             )
 
@@ -398,8 +397,8 @@ class HaystackSerializerHighlighterMixinTestCase(WarningTestCaseMixin, TestCase)
         except ImproperlyConfigured as e:
             self.assertEqual(
                 str(e),
-                "%(cls)s is missing a highlighter_class. Define %(cls)s.highlighter_class, "
-                "or override %(cls)s.get_highlighter()." % {"cls": self.view2.serializer_class.__name__},
+                f"{self.view2.serializer_class.__name__} is missing a highlighter_class. Define {self.view2.serializer_class.__name__}.highlighter_class, "
+                f"or override {self.view2.serializer_class.__name__}.get_highlighter().",
             )
 
 
@@ -560,7 +559,7 @@ class HaystackFacetSerializerTestCase(TestCase):
             self.fail("Did not fail when defining a Serializer without a Meta class")
         except ImproperlyConfigured as e:
             self.assertEqual(
-                str(e), "%s must implement a Meta class or have the property _abstract" % "FacetSerializer"
+                str(e), "{} must implement a Meta class or have the property _abstract".format("FacetSerializer")
             )
 
 

@@ -43,7 +43,7 @@ except ImportError:
 
             def quote(arg):
                 if " " in arg:
-                    return '"%s"' % arg
+                    return f'"{arg}"'
                 return arg
 
             args = [quote(arg) for arg in args]
@@ -54,11 +54,10 @@ DEFAULT_VERSION = "0.6.14"
 DEFAULT_URL = "http://pypi.python.org/packages/source/d/distribute/"
 SETUPTOOLS_FAKED_VERSION = "0.6c11"
 
-SETUPTOOLS_PKG_INFO = (
-    """\
+SETUPTOOLS_PKG_INFO = f"""\
 Metadata-Version: 1.0
 Name: setuptools
-Version: %s
+Version: {SETUPTOOLS_FAKED_VERSION}
 Summary: xxxx
 Home-page: xxx
 Author: xxx
@@ -66,8 +65,6 @@ Author-email: xxx
 License: xxx
 Description: xxx
 """
-    % SETUPTOOLS_FAKED_VERSION
-)
 
 
 def _install(tarball):
@@ -124,7 +121,7 @@ def _build_egg(egg, tarball, to_dir):
 
 
 def _do_download(version, download_base, to_dir, download_delay):
-    egg = os.path.join(to_dir, "distribute-%s-py%d.%d.egg" % (version, sys.version_info[0], sys.version_info[1]))
+    egg = os.path.join(to_dir, f"distribute-{version}-py{sys.version_info[0]}.{sys.version_info[1]}")
     if not os.path.exists(egg):
         tarball = download_setuptools(version, download_base, to_dir, download_delay)
         _build_egg(egg, tarball, to_dir)
@@ -157,11 +154,11 @@ def use_setuptools(
             e = sys.exc_info()[1]
             if was_imported:
                 sys.stderr.write(
-                    "The required version of distribute (>=%s) is not available,\n"
+                    f"The required version of distribute (>={version}) is not available,\n"
                     "and can't be installed while this script is running. Please\n"
                     "install a more recent version first, using\n"
                     "'easy_install -U distribute'."
-                    "\n\n(Currently using %r)\n" % (version, e.args[0])
+                    f"\n\n(Currently using {e.args[0]!r})\n"
                 )
                 sys.exit(2)
             else:
@@ -189,7 +186,7 @@ def download_setuptools(version=DEFAULT_VERSION, download_base=DEFAULT_URL, to_d
         from urllib.request import urlopen
     except ImportError:
         from urllib2 import urlopen
-    tgz_name = "distribute-%s.tar.gz" % version
+    tgz_name = f"distribute-{version}.tar.gz"
     url = download_base + tgz_name
     saveto = os.path.join(to_dir, tgz_name)
     src = dst = None
@@ -263,7 +260,7 @@ def _same_content(path, content):
 
 
 def _rename_path(path):
-    new_name = path + ".OLD.%s" % time.time()
+    new_name = path + f".OLD.{time.time()}"
     log.warn("Renaming %s into %s", path, new_name)
     os.rename(path, new_name)
     return new_name
@@ -374,7 +371,7 @@ def _under_prefix(location):
     args = sys.argv[sys.argv.index("install") + 1 :]
     for index, arg in enumerate(args):
         for option in ("--root", "--prefix"):
-            if arg.startswith("%s=" % option):
+            if arg.startswith(f"{option}="):
                 top_dir = arg.split("root=")[-1]
                 return location.startswith(top_dir)
             elif arg == option:
@@ -484,7 +481,7 @@ def _extractall(self, path=".", members=None):
             if self.errorlevel > 1:
                 raise
             else:
-                self._dbg(1, "tarfile: %s" % e)
+                self._dbg(1, f"tarfile: {e}")
 
 
 def main(argv, version=DEFAULT_VERSION):

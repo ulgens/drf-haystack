@@ -337,7 +337,7 @@ class HaystackHighlightFilterTestCase(TestCase):
         response.render()
         for result in json.loads(response.content.decode()):
             self.assertTrue("highlighted" in result)
-            self.assertEqual(result["highlighted"], " ".join(("<em>Jeremy</em>", "%s\n" % result["lastname"])))
+            self.assertEqual(result["highlighted"], " ".join(("<em>Jeremy</em>", "{}\n".format(result["lastname"]))))
 
 
 class HaystackBoostFilterTestCase(TestCase):
@@ -411,7 +411,7 @@ class HaystackBoostFilterTestCase(TestCase):
         except ValueError as e:
             self.assertEqual(
                 str(e),
-                "Cannot convert the '%s' query parameter to a valid boost filter." % HaystackBoostFilter.query_param,
+                f"Cannot convert the '{HaystackBoostFilter.query_param}' query parameter to a valid boost filter.",
             )
 
 

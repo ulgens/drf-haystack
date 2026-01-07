@@ -76,8 +76,8 @@ class BaseHaystackFilterBackend(BaseFilterBackend):
         methods of building the query sent to the search engine backend.
         """
         assert self.query_builder_class is not None, (
-            "'%s' should either include a `query_builder_class` attribute, "
-            "or override the `get_query_builder_class()` method." % self.__class__.__name__
+            f"'{self.__class__.__name__}' should either include a `query_builder_class` attribute, "
+            "or override the `get_query_builder_class()` method."
         )
         return self.query_builder_class
 
@@ -237,10 +237,10 @@ class HaystackOrderingFilter(OrderingFilter):
             # View explicitly allows filtering on all model fields.
             if not queryset.query.models:
                 raise ImproperlyConfigured(
-                    "Cannot use %s with '__all__' as 'ordering_fields' attribute on a view "
+                    f"Cannot use {self.__class__.__name__} with '__all__' as 'ordering_fields' attribute on a view "
                     "which has no 'index_models' set. Either specify some 'ordering_fields', "
                     "set the 'index_models' attribute or override the 'get_queryset' "
-                    "method and pass some 'index_models'." % self.__class__.__name__
+                    "method and pass some 'index_models'."
                 )
 
             model_fields = map(

@@ -93,8 +93,8 @@ class FacetMixin:
         """
         if self.facet_serializer_class is None:
             raise AttributeError(
-                "%(cls)s should either include a `facet_serializer_class` attribute, "
-                "or override %(cls)s.get_facet_serializer_class() method." % {"cls": self.__class__.__name__}
+                f"{self.__class__.__name__} should either include a `facet_serializer_class` attribute, "
+                f"or override {self.__class__.__name__}.get_facet_serializer_class() method."
             )
         return self.facet_serializer_class
 

@@ -71,16 +71,16 @@ class HaystackGenericAPIView(GenericAPIView):
                 queryset = self.get_queryset(index_models=[ctype.model_class()])
             except (ValueError, ContentType.DoesNotExist):
                 raise Http404(
-                    "Could not find any models matching '%s'. Make sure to use a valid "
-                    "'app_label.model' name for the 'model' query parameter." % self.request.query_params["model"]
+                    "Could not find any models matching '{}'. Make sure to use a valid "
+                    "'app_label.model' name for the 'model' query parameter.".format(self.request.query_params["model"])
                 )
 
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
         if lookup_url_kwarg not in self.kwargs:
             raise AttributeError(
-                "Expected view %s to be called with a URL keyword argument "
-                "named '%s'. Fix your URL conf, or set the `.lookup_field` "
-                "attribute on the view correctly." % (self.__class__.__name__, lookup_url_kwarg)
+                f"Expected view {self.__class__.__name__} to be called with a URL keyword argument "
+                f"named '{lookup_url_kwarg}'. Fix your URL conf, or set the `.lookup_field` "
+                "attribute on the view correctly."
             )
         queryset = queryset.filter(self.query_object((self.document_uid_field, self.kwargs[lookup_url_kwarg])))
         count = queryset.count()

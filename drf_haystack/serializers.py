@@ -48,7 +48,7 @@ class Meta(type):
         cls = super().__new__(mcs, str(name), bases, attrs)
 
         if cls.fields and cls.exclude:
-            raise ImproperlyConfigured("%s cannot define both 'fields' and 'exclude'." % name)
+            raise ImproperlyConfigured(f"{name} cannot define both 'fields' and 'exclude'.")
 
         return cls
 
@@ -73,7 +73,7 @@ class HaystackSerializerMeta(serializers.SerializerMetaclass):
             cls.Meta = Meta("Meta", (Meta,), dict(cls.Meta.__dict__))
 
         elif not cls._abstract:
-            raise ImproperlyConfigured("%s must implement a Meta class or have the property _abstract" % name)
+            raise ImproperlyConfigured(f"{name} must implement a Meta class or have the property _abstract")
 
         return cls
 
@@ -181,7 +181,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
         for index_cls in self.Meta.index_classes:
             prefix = ""
             if prefix_field_names:
-                prefix = "_%s__" % self._get_index_class_name(index_cls)
+                prefix = f"_{self._get_index_class_name(index_cls)}__"
             for field_name, field_type in index_cls.fields.items():
                 orig_name = field_name
                 field_name = f"{prefix}{field_name}"
@@ -248,7 +248,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
         index = instance.searchindex
         serializer_class = serializers.get(type(index), None)
         if not serializer_class:
-            raise ImproperlyConfigured("Could not find serializer for %s in mapping" % index)
+            raise ImproperlyConfigured(f"Could not find serializer for {index} in mapping")
         return serializer_class(context=self._context).to_representation(instance)
 
 
@@ -303,10 +303,9 @@ class FacetFieldSerializer(serializers.Serializer):
 
         else:
             raise AttributeError(
-                "%(root_cls)s is missing a `paginate_by_param` attribute. "
-                "Define a %(root_cls)s.paginate_by_param or override "
-                "%(cls)s.get_paginate_by_param()."
-                % {"root_cls": self.root.__class__.__name__, "cls": self.__class__.__name__}
+                f"{self.root.__class__.__name__} is missing a `paginate_by_param` attribute. "
+                f"Define a {self.root.__class__.__name__}.paginate_by_param or override "
+                f"{self.__class__.__name__}.get_paginate_by_param()."
             )
 
     def get_text(self, instance):
@@ -453,8 +452,8 @@ class HighlighterMixin:
     def get_highlighter(self):
         if not self.highlighter_class:
             raise ImproperlyConfigured(
-                "%(cls)s is missing a highlighter_class. Define %(cls)s.highlighter_class, "
-                "or override %(cls)s.get_highlighter()." % {"cls": self.__class__.__name__}
+                f"{self.__class__.__name__} is missing a highlighter_class. Define {self.__class__.__name__}.highlighter_class, "
+                f"or override {self.__class__.__name__}.get_highlighter()."
             )
         return self.highlighter_class
 

@@ -55,7 +55,7 @@ class BoostQueryBuilder(BaseQueryBuilder):
             try:
                 term, val = chain.from_iterable(zip(self.tokenize(value, self.view.lookup_sep)))
             except ValueError:
-                raise ValueError("Cannot convert the '%s' query parameter to a valid boost filter." % query_param)
+                raise ValueError(f"Cannot convert the '{query_param}' query parameter to a valid boost filter.")
             else:
                 try:
                     applicable_filters = {"term": term, "boost": float(val)}
@@ -76,9 +76,7 @@ class FilterQueryBuilder(BaseQueryBuilder):
         super().__init__(backend, view)
 
         assert getattr(self.backend, "default_operator", None) in (operator.and_, operator.or_), (
-            "{cls}.default_operator must be either 'operator.and_' or 'operator.or_'.".format(
-                cls=self.backend.__class__.__name__
-            )
+            f"{self.backend.__class__.__name__}.default_operator must be either 'operator.and_' or 'operator.or_'."
         )
         self.default_operator = self.backend.default_operator
         self.default_same_param_operator = getattr(self.backend, "default_same_param_operator", self.default_operator)
@@ -115,7 +113,7 @@ class FilterQueryBuilder(BaseQueryBuilder):
             negation_keyword = constants.DRF_HAYSTACK_NEGATION_KEYWORD
             if len(param_parts) > 1 and param_parts[1] == negation_keyword:
                 excluding_term = True
-                param = param.replace("__%s" % negation_keyword, "")  # haystack wouldn't understand our negation
+                param = param.replace(f"__{negation_keyword}", "")  # haystack wouldn't understand our negation
 
             if self.view.serializer_class:
                 if hasattr(self.view.serializer_class.Meta, "field_aliases"):
@@ -188,9 +186,9 @@ class FacetQueryBuilder(BaseQueryBuilder):
 
         if self.view.lookup_sep == ":":
             raise AttributeError(
-                "The %(cls)s.lookup_sep attribute conflicts with the HaystackFacetFilter "
+                f"The {self.view.__class__.__name__}.lookup_sep attribute conflicts with the HaystackFacetFilter "
                 "query parameter parser. Please choose another `lookup_sep` attribute "
-                "for %(cls)s." % {"cls": self.view.__class__.__name__}
+                f"for {self.view.__class__.__name__}."
             )
 
         fields = facet_serializer_cls.Meta.fields
@@ -210,7 +208,7 @@ class FacetQueryBuilder(BaseQueryBuilder):
                     raise ValueError("Date faceting requires at least 'start_date', 'end_date' and 'gap_by' to be set.")
 
                 if options["gap_by"] not in valid_gap:
-                    raise ValueError("The 'gap_by' parameter must be one of %s." % ", ".join(valid_gap))
+                    raise ValueError("The 'gap_by' parameter must be one of {}.".format(", ".join(valid_gap)))
 
                 options.setdefault("gap_amount", 1)
                 date_facets[field] = field_options[field]
@@ -232,8 +230,8 @@ class FacetQueryBuilder(BaseQueryBuilder):
                 for token in tokens:
                     if not len(token.split(":")) == 2:
                         warnings.warn(
-                            "The %s token is not properly formatted. Tokens need to be "
-                            "formatted as 'token:value' pairs." % token
+                            f"The {token} token is not properly formatted. Tokens need to be "
+                            "formatted as 'token:value' pairs."
                         )
                         continue
 
@@ -260,9 +258,8 @@ class SpatialQueryBuilder(BaseQueryBuilder):
         super().__init__(backend, view)
 
         assert getattr(self.backend, "point_field", None) is not None, (
-            "%(cls)s.point_field cannot be None. Set the %(cls)s.point_field "
+            f"{self.backend.__class__.__name__}.point_field cannot be None. Set the {self.backend.__class__.__name__}.point_field "
             "to the name of the `LocationField` you want to filter on your index class."
-            % {"cls": self.backend.__class__.__name__}
         )
 
         try:
