@@ -10,4 +10,6 @@ preview = true
 extend-select = [
     # https://docs.astral.sh/ruff/rules/#isort-i
     "I",
+    # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "UP",
 ]
