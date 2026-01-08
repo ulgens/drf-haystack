@@ -1,0 +1,49 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [ "setuptools" ]
+
+[project]
+name = "drf-haystack"
+version = "1.9.1"
+description = "Makes Haystack play nice with Django REST Framework"
+readme = "README.md"
+license = "MIT"
+authors = [ { name = "Rolf Håvard Blindheim", email = "rhblind@gmail.com" } ]
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "django>=4.2,<5.2",
+    "django-haystack>=2.8,<3.4",
+    "djangorestframework>=3.12,<3.16",
+    "python-dateutil",
+]
+
+urls.Download = "https://github.com/rhblind/drf-haystack"
+urls.Homepage = "https://github.com/rhblind/drf-haystack"
+
+[dependency-groups]
+dev = [
+    "coverage",
+    "elasticsearch>=2,<=8.3.3",
+    "geopy",
+    "pytz",
+    "requests",
+    "tox",
+    { include-group = "docs" },
+]
+
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+]
