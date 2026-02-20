@@ -33,8 +33,8 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        "Django>=4.2,<5.2",
-        "djangorestframework>=3.12,<3.16",
+        "Django>=5.2,<6",
+        "djangorestframework>=3.16,<3.17",
         "django-haystack>=2.8,<3.4",
         "python-dateutil",
     ],
