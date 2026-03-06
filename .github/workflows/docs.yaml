@@ -12,7 +12,7 @@ env:
   # renovate: datasource=python-version depName=python
   PYTHON_VERSION: 3.14.3
   # renovate: datasource=pypi depName=uv
-  UV_VERSION: 0.9.22
+  UV_VERSION: 0.10.9
   # renovate: datasource=pypi depName=sphinx
   SPHINX_VERSION: 9.1.0
 
@@ -29,7 +29,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv ${{ env.UV_VERSION }} & Python ${{ env.PYTHON_VERSION }}
-        uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867 # v7.1.6
+        uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7.3.1
         with:
           enable-cache: true
           python-version: ${{ env.PYTHON_VERSION }}
