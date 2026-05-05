@@ -9,7 +9,7 @@ repos:
     -   id: trailing-whitespace
 
 -   repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.12.1
+    rev: v2.21.2
     hooks:
     -   id: pyproject-fmt
         args: [
@@ -19,7 +19,7 @@ repos:
         ]
 
 -   repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.29.1
+    rev: 1.30.0
     hooks:
     -   id: django-upgrade
         args: ["--target-version=4.2"]
@@ -32,7 +32,7 @@ repos:
     -   id: ruff-format
 
 -   repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.22.0
+    rev: v1.24.1
     hooks:
     -   id: zizmor
         args: ["--no-progress", "--persona=auditor"]
