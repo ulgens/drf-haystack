@@ -1,0 +1,64 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [ "hatchling" ]
+
+[project]
+name = "drf-haystack"
+version = "1.9.1"
+description = "Makes Haystack play nice with Django REST Framework"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Dhaval Gojiya", email = "dhavalgojiya10@gmail.com" },
+    { name = "Rolf Håvard Blindheim", email = "rhblind@gmail.com" },
+    { name = "Ülgen Sarıkavak", email = "ulgensrkvk@gmail.com" },
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "django>=4.2,<5.2",
+    "django-haystack>=2.8,<3.4",
+    "djangorestframework>=3.12,<3.16",
+    "python-dateutil",
+]
+urls.Documentation = "https://drf-haystack.readthedocs.io"
+urls.Homepage = "https://github.com/ulgens/drf-haystack"
+urls.Issues = "https://github.com/ulgens/drf-haystack/issues"
+urls.Repository = "https://github.com/ulgens/drf-haystack.git"
+
+[dependency-groups]
+dev = [
+    "prek>=0.4.1",
+    "ruff>=0.15.13",
+]
+test = [
+    "coverage>=7.6.1",
+    "elasticsearch>=2.0.0,<=8.3.3",
+    "geopy>=2.4.1",
+    "pytz>=2026.2",
+    "tox>=4.25.0",
+    "urllib3>=2.2.3",
+]
+docs = [
+    "sphinx>=7.1.2",
+    "sphinx-rtd-theme>=3.1.0",
+]
+
+[tool.hatch]
+build.targets.sdist.exclude = [ ".github" ]
+
+[tool.uv]
+default-groups = [ "dev", "test" ]
+fork-strategy = "fewest"
