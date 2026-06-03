@@ -2,7 +2,7 @@ coverage
 django==4.2.29
 django-haystack>=2.8,<=3.2
 djangorestframework>=3.7.0,<=3.13
-elasticsearch>=2.0.0,<=8.3.3
+elasticsearch>=9.4.1,<=9.4.1
 sphinx
 sphinx-rtd-theme
 urllib3
