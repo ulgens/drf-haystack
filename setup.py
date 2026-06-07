@@ -43,7 +43,9 @@ setup(
     test_suite="tests.run_tests.start",
     classifiers=[
         "Operating System :: OS Independent",
-        "Development Status :: 5 - Production/Stable",
+        # The package is being transferred between organizations and has no working tests / CI.
+        # Use at your own risk.
+        "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Framework :: Django",
         "Intended Audience :: Developers",
