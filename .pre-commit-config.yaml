@@ -15,7 +15,6 @@ repos:
         args: [
             "--indent", "4",
             "--keep-full-version",
-            "--max-supported-python", "3.10",
         ]
 
 -   repo: https://github.com/adamchainz/django-upgrade

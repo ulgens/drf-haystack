@@ -1,0 +1,31 @@
+[project]
+name = "drf-haystack"
+version = "1.9.1"
+description = "Makes Haystack play nice with Django REST Framework"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Dhaval Gojiya", email = "dhavalgojiya10@gmail.com" },
+    { name = "Rolf Håvard Blindheim", email = "rhblind@gmail.com" },
+    { name = "Ülgen Sarıkavak", email = "foss@ulgenwanders.net" },
+]
+requires-python = ">=3.8,<3.11"
+classifiers = [
+    # The package is being transferred between organizations and has no working tests / CI.
+    # Use at your own risk.
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+urls.Documentation = "https://drf-haystack.readthedocs.io"
+urls.Homepage = "https://github.com/ulgens/drf-haystack"
+urls.Issues = "https://github.com/ulgens/drf-haystack/issues"
+urls.Repository = "https://github.com/ulgens/drf-haystack.git"
