@@ -12,10 +12,6 @@ repos:
     rev: v2.12.1
     hooks:
     -   id: pyproject-fmt
-        args: [
-            "--indent", "4",
-            "--keep-full-version",
-        ]
 
 -   repo: https://github.com/adamchainz/django-upgrade
     rev: 1.29.1

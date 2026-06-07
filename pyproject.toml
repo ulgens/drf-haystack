@@ -30,3 +30,7 @@ urls.Documentation = "https://drf-haystack.readthedocs.io"
 urls.Homepage = "https://github.com/ulgens/drf-haystack"
 urls.Issues = "https://github.com/ulgens/drf-haystack/issues"
 urls.Repository = "https://github.com/ulgens/drf-haystack.git"
+
+[tool.pyproject-fmt]
+indent = 4
+keep_full_version = true
