@@ -24,6 +24,8 @@ repos:
     hooks:
     -   id: ruff-check
         args: [ --fix ]
+        # This files will be deleted soon, no need to spend time with lint-format fixes
+        exclude: "setup.py|ez_setup.py"
     -   id: ruff-format
 
 -   repo: https://github.com/zizmorcore/zizmor-pre-commit
