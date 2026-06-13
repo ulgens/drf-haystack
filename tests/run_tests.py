@@ -3,13 +3,14 @@
 
 import os
 import sys
+from pathlib import Path
 
 import django
 from django.core.management import call_command
 
 
 def start(argv=None):
-    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    sys.path.insert(0, str(Path(__file__).parent.parent))
     os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
     django.setup()
 

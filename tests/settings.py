@@ -1,6 +1,7 @@
 import os
+from pathlib import Path
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "tests"))
+BASE_DIR = Path(__file__).parent.resolve()
 
 SECRET_KEY = "NOBODY expects the Spanish Inquisition!"
 DEBUG = True
@@ -10,7 +11,7 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, os.pardir, "test.db"),
+        "NAME": BASE_DIR.parent / "test.db",
     }
 }
 
@@ -62,7 +63,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-DEFAULT_LOG_DIR = os.path.join(BASE_DIR, "logs")
+DEFAULT_LOG_DIR = BASE_DIR / "logs"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -74,7 +75,7 @@ LOGGING = {
         "file_handler": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": os.path.join(DEFAULT_LOG_DIR, "tests.log"),
+            "filename": DEFAULT_LOG_DIR / "tests.log",
         },
     },
     "loggers": {

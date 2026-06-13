@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 from django.core import serializers
 from django.db import migrations
@@ -9,19 +9,19 @@ def load_data(apps, schema_editor):
     Load fixtures for MockPerson, MockPet and MockLocation
     """
 
-    fixtures = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, "fixtures"))
+    fixtures = Path(__file__).parent.parent / "fixtures"
 
-    with open(os.path.join(fixtures, "mockperson.json")) as fixture:
+    with (fixtures / "mockperson.json").open() as fixture:
         objects = serializers.deserialize("json", fixture, ignorenonexistent=True)
         for obj in objects:
             obj.save()
 
-    with open(os.path.join(fixtures, "mocklocation.json")) as fixture:
+    with (fixtures / "mocklocation.json").open() as fixture:
         objects = serializers.deserialize("json", fixture, ignorenonexistent=True)
         for obj in objects:
             obj.save()
 
-    with open(os.path.join(fixtures, "mockpet.json")) as fixture:
+    with (fixtures / "mockpet.json").open() as fixture:
         objects = serializers.deserialize("json", fixture, ignorenonexistent=True)
         for obj in objects:
             obj.save()
