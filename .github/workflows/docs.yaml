@@ -10,9 +10,9 @@ concurrency:
 
 env:
   # renovate: datasource=python-version depName=python
-  PYTHON_VERSION: 3.14.5
+  PYTHON_VERSION: 3.14.6
   # renovate: datasource=pypi depName=uv
-  UV_VERSION: 0.9.22
+  UV_VERSION: 0.11.21
   # renovate: datasource=pypi depName=sphinx
   SPHINX_VERSION: 9.1.0
 
