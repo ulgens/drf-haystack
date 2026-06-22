@@ -1,0 +1,57 @@
+name: "Tests"
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: "tox -v"
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        django-version: ["4.2"]
+        python-version: ["3.8", "3.9", "3.10"]
+        elastic-version: ["1.7", "2.4", "5.5", "7.13.1"]
+
+    services:
+      elastic:
+        # TODO: Revisit pinning strategy
+        image: elasticsearch:${{ matrix.elastic-version }} # zizmor: ignore[unpinned-images]
+        env:
+          discovery.type: "single-node"
+        options: >-
+          --health-cmd "curl http://localhost:9200/_cluster/health"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 9200:9200
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install system dependencies
+        run: sudo apt install --no-install-recommends -y gdal-bin
+
+      - name: Run tests with Django ${{ matrix.django-version }} and Elasticsearch ${{ matrix.elastic-version }}
+        # FIXME: Find a way to remove zizmor ignore
+        run: | # zizmor: ignore[template-injection]
+          python -m pip install --upgrade pip setuptools wheel
+          pip install coverage pytz
+          pip install django==${{ matrix.django-version }} elasticsearch==${{ matrix.elastic-version }}
+          pip install --editable .
+          coverage run tests/run_tests.py
