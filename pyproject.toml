@@ -32,7 +32,7 @@ classifiers = [
 ]
 dependencies = [
     "django>=4.2,<5.2",
-    "django-haystack>=2.8,<3.4",
+    "django-haystack>=3.4.0,<3.5",
     "djangorestframework>=3.12,<3.16",
     "python-dateutil",
 ]
