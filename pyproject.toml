@@ -43,7 +43,7 @@ urls.Repository = "https://github.com/ulgens/drf-haystack.git"
 [dependency-groups]
 dev = [
     "prek==0.4.4",
-    "ruff==0.15.17",
+    "ruff==0.15.22",
 ]
 test = [
     "coverage==7.6.1",
