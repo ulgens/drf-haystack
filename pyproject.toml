@@ -16,6 +16,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Web Environment",
     "Framework :: Django",
+    "Framework :: Django :: 5.2",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -31,7 +32,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-    "django>=4.2,<5.2",
+    "django>=4.2,<5.3",
     "django-haystack>=3.3.0,<4",
     "djangorestframework>=3.12,<3.16",
     "python-dateutil",
