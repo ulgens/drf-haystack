@@ -27,6 +27,7 @@ jobs:
       matrix:
         django-version:
           - "5.2.*"
+          - "6.0.*"
         python-version:
           - "3.11"
           - "3.12"
@@ -37,6 +38,15 @@ jobs:
         drf-version:
           - "3.16.*"
           - "3.17.*"
+        exclude:
+          # Django 6.0 support added in DRF 3.17.0
+          # https://www.django-rest-framework.org/community/release-notes/#3170
+          - drf-version: "3.16.*"
+            django-version: "6.0.*"
+          # Django 6.0 doesn't support Python 3.11
+          # https://docs.djangoproject.com/en/6.0/faq/install/#what-python-version-can-i-use-with-django
+          - django-version: "6.0.*"
+            python-version: "3.11"
 
     env:
       UV_NO_DEV: 1

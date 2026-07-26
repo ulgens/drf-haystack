@@ -33,7 +33,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        "Django>=5.2,<5.3",
+        "Django>=5.2,<6.1",
         "djangorestframework>=3.16",
         "django-haystack>=3.3.0,<4",
         "python-dateutil",
@@ -49,6 +49,7 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Django",
         "Framework :: Django :: 5.2",
+        "Framework :: Django :: 6.0",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
