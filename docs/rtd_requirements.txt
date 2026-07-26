@@ -1,5 +1,5 @@
 coverage
-django==4.2.30
+django==5.2.16
 django-haystack>=3.3.0,<4
 djangorestframework>=3.7.0,<=3.13
 elasticsearch>=2.0.0,<=8.3.3

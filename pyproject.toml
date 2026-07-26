@@ -30,7 +30,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-    "django>=4.2,<5.3",
+    "django>=5.2,<5.3",
     "django-haystack>=3.3.0,<4",
     "djangorestframework>=3.12,<3.16",
     "python-dateutil",
