@@ -27,18 +27,11 @@ jobs:
           - "4.2.*"
           - "5.2.*"
         python-version:
-          - "3.8"
-          - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
         elastic-version:
           - "7.17.29"
-        exclude:
-          - django-version: "5.2.*"
-            python-version: "3.8"
-          - django-version: "5.2.*"
-            python-version: "3.9"
     env:
       UV_NO_DEV: 1
       ELASTICSEARCH_VERSION: ${{ matrix.elastic-version }}

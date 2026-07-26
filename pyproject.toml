@@ -9,7 +9,7 @@ authors = [
     { name = "Rolf Håvard Blindheim", email = "rhblind@gmail.com" },
     { name = "Ülgen Sarıkavak", email = "foss@ulgenwanders.net" },
 ]
-requires-python = ">=3.8,<3.15"
+requires-python = ">=3.10,<3.15"
 classifiers = [
     # The package is being transferred between organizations and has no working tests / CI.
     # Use at your own risk.
@@ -21,8 +21,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
