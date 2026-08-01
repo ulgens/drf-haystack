@@ -1,4 +1,4 @@
-name: Check pre-commit hooks
+name: "Git Hooks"
 
 on: [push, pull_request]
 
