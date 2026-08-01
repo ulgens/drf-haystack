@@ -21,7 +21,7 @@ env:
   SPHINX_VERSION: 8.1.3
 
 jobs:
-  build:
+  build-docs:
     name: "Build docs"
     runs-on: ubuntu-24.04
     timeout-minutes: 1
@@ -40,6 +40,5 @@ jobs:
           version: ${{ env.UV_VERSION }}
 
       - name: Build docs
-        run: |
-          cd docs
-          uv run --with sphinx==${SPHINX_VERSION} make html
+        working-directory: ./docs
+        run: uv run --with sphinx==${SPHINX_VERSION} make html

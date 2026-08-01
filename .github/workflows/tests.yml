@@ -17,10 +17,11 @@ env:
   UV_VERSION: 0.12.1
 
 jobs:
-  test:
+  run-tests:
     name: Test (Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }}, Elasticsearch ${{ matrix.elastic-version
       }})
     runs-on: ubuntu-24.04
+
     strategy:
       fail-fast: false
       matrix:
@@ -32,12 +33,14 @@ jobs:
           - "3.12"
         elastic-version:
           - "7.17.29"
+
     env:
       UV_NO_DEV: 1
       ELASTICSEARCH_VERSION: ${{ matrix.elastic-version }}
       PYTHONUNBUFFERED: 1
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
