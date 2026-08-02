@@ -30,6 +30,8 @@ jobs:
         python-version:
           - "3.11"
           - "3.12"
+          - "3.13"
+          - "3.14"
         elastic-version:
           - "7.17.29"
         drf-version:
@@ -37,6 +39,30 @@ jobs:
           - "3.13.*"
           - "3.14.*"
           - "3.15.*"
+        exclude:
+          # DRF 3.12
+          - drf-version: "3.12.*"
+            python-version: "3.13"
+          - drf-version: "3.12.*"
+            python-version: "3.14"
+
+          # DRF 3.13
+          - drf-version: "3.13.*"
+            python-version: "3.13"
+          - drf-version: "3.13.*"
+            python-version: "3.14"
+
+          # DRF 3.14
+          - drf-version: "3.14.*"
+            python-version: "3.13"
+          - drf-version: "3.14.*"
+            python-version: "3.14"
+
+          # DRF 3.15
+          - drf-version: "3.15.*"
+            python-version: "3.13"
+          - drf-version: "3.15.*"
+            python-version: "3.14"
 
     env:
       UV_NO_DEV: 1

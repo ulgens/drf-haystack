@@ -28,7 +28,7 @@ Features
 
 Supported Python and Django versions:
 
-    - Python >=3.11, <3.13
+    - Python >=3.11, <3.15
     - `All supported versions of Django <https://www.djangoproject.com/download/#supported-versions>`_
 
 
