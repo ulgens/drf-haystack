@@ -19,7 +19,7 @@ env:
 jobs:
   run-tests:
     name: Test (Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }}, Elasticsearch ${{ matrix.elastic-version
-      }})
+      }}, DRF ${{ matrix.drf-version }})
     runs-on: ubuntu-24.04
 
     strategy:
@@ -32,6 +32,11 @@ jobs:
           - "3.12"
         elastic-version:
           - "7.17.29"
+        drf-version:
+          - "3.12.*"
+          - "3.13.*"
+          - "3.14.*"
+          - "3.15.*"
 
     env:
       UV_NO_DEV: 1
@@ -72,6 +77,12 @@ jobs:
         env:
           DJANGO_VERSION: ${{ matrix.django-version }}
         run: uv pip install -U "django==${DJANGO_VERSION}"
+
+      # Use always latest patch version of DRF from the matrix version pattern `major.minor.*`.
+      - name: Install matrix DRF
+        env:
+          DRF_VERSION: ${{ matrix.drf-version }}
+        run: uv pip install -U "djangorestframework==${DRF_VERSION}"
 
       - name: Run tests
         run: uv run --no-sync manage.py test tests
