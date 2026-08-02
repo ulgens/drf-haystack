@@ -18,7 +18,7 @@ env:
   # renovate: datasource=pypi depName=uv
   UV_VERSION: 0.12.1
   # renovate: datasource=pypi depName=sphinx
-  SPHINX_VERSION: 8.1.3
+  SPHINX_VERSION: 9.0.4
 
 jobs:
   build-docs:
