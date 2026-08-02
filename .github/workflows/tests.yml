@@ -40,23 +40,14 @@ jobs:
           - "3.14.*"
           - "3.15.*"
         exclude:
-          # DRF 3.12
+          # DRF 3.12 is just too old. Will be removed in https://github.com/ulgens/drf-haystack/pull/310
           - drf-version: "3.12.*"
-            python-version: "3.13"
-          - drf-version: "3.12.*"
-            python-version: "3.14"
 
-          # DRF 3.13
+          # DRF 3.13 is just too old. Will be removed in https://github.com/ulgens/drf-haystack/pull/310
           - drf-version: "3.13.*"
-            python-version: "3.13"
-          - drf-version: "3.13.*"
-            python-version: "3.14"
 
-          # DRF 3.14
+          # DRF 3.13 is just too old. Will be removed in https://github.com/ulgens/drf-haystack/pull/310
           - drf-version: "3.14.*"
-            python-version: "3.13"
-          - drf-version: "3.14.*"
-            python-version: "3.14"
 
           # DRF 3.15
           - drf-version: "3.15.*"
