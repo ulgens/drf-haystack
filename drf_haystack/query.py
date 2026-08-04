@@ -317,10 +317,10 @@ class SpatialQueryBuilder(BaseQueryBuilder):
             # just return.
             pass
         else:
-            for unit in distance:
-                if not len(distance[unit]) == 1:
+            for unit, value in distance.items():
+                if not len(value) == 1:
                     raise ValueError("Each unit must have exactly one value.")
-                distance[unit] = float(distance[unit][0])
+                distance[unit] = float(value[0])
 
             if point and distance:
                 applicable_filters = {
