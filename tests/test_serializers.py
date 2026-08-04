@@ -4,7 +4,7 @@
 
 
 import json
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from django.core.exceptions import ImproperlyConfigured
 from django.http import QueryDict
@@ -67,8 +67,8 @@ class SearchPersonFacetSerializer(HaystackFacetSerializer):
             "firstname": {},
             "lastname": {},
             "created": {
-                "start_date": datetime.now() - timedelta(days=10 * 365),
-                "end_date": datetime.now(),
+                "start_date": datetime.now(tz=UTC) - timedelta(days=10 * 365),
+                "end_date": datetime.now(tz=UTC),
                 "gap_by": "month",
                 "gap_amount": 1,
             },

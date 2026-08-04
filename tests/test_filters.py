@@ -5,7 +5,7 @@
 
 import json
 import unittest
-from datetime import date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 
 from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
@@ -464,8 +464,8 @@ class HaystackFacetFilterTestCase(WarningTestCaseMixin, TestCase):
                     "firstname": {},
                     "lastname": {},
                     "created": {
-                        "start_date": datetime.now() - timedelta(days=3 * 365),
-                        "end_date": datetime.now(),
+                        "start_date": datetime.now(tz=UTC) - timedelta(days=3 * 365),
+                        "end_date": datetime.now(tz=UTC),
                         "gap_by": "day",
                         "gap_amount": 10,
                     },

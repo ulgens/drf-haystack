@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from random import randint, randrange
 
 import pytz
@@ -14,7 +14,7 @@ def get_random_date(start=date(1950, 1, 1), end=date.today()):
     return start + timedelta(seconds=randrange(delta))
 
 
-def get_random_datetime(start=datetime(1950, 1, 1, 0, 0), end=datetime.today()):
+def get_random_datetime(start=datetime(1950, 1, 1, 0, 0, tzinfo=UTC), end=datetime.today()):
     """
     :return a random datetime
     """

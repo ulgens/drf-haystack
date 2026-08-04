@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from rest_framework.serializers import HyperlinkedIdentityField
 
@@ -50,8 +50,8 @@ class MockPersonFacetSerializer(HaystackFacetSerializer):
             "firstname": {},
             "lastname": {},
             "created": {
-                "start_date": datetime.now() - timedelta(days=3 * 365),
-                "end_date": datetime.now(),
+                "start_date": datetime.now(tz=UTC) - timedelta(days=3 * 365),
+                "end_date": datetime.now(tz=UTC),
                 "gap_by": "day",
                 "gap_amount": 10,
             },
