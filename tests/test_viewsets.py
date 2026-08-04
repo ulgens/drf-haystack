@@ -62,7 +62,7 @@ class HaystackViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_viewset_get_queryset_with_queryset(self):
-        setattr(self.view1, "queryset", SearchQuerySet().all())
+        self.view1.queryset = SearchQuerySet().all()
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view1.as_view(actions={"get": "list"})(request)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -97,10 +97,10 @@ class HaystackViewSetTestCase(TestCase):
         self.assertRaises(AttributeError, self.view1.as_view(actions={"get": "retrieve"}), request, invalid_lookup=1)
 
     def test_viewset_get_obj_override_lookup_field(self):
-        setattr(self.view1, "lookup_field", "custom_lookup")
+        self.view1.lookup_field = "custom_lookup"
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view1.as_view(actions={"get": "retrieve"})(request, custom_lookup=1)
-        setattr(self.view1, "lookup_field", "pk")
+        self.view1.lookup_field = "pk"
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_viewset_more_like_this_decorator(self):
@@ -136,7 +136,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
         MockPersonIndex().clear()
 
     def test_viewset_get_queryset_with_no_permsission(self):
-        setattr(self.view, "permission_classes", [])
+        self.view.permission_classes = []
 
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view.as_view(actions={"get": "list"})(request)
@@ -145,7 +145,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
     def test_viewset_get_queryset_with_AllowAny_permission(self):
         from rest_framework.permissions import AllowAny
 
-        setattr(self.view, "permission_classes", (AllowAny,))
+        self.view.permission_classes = (AllowAny,)
 
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view.as_view(actions={"get": "list"})(request)
@@ -154,7 +154,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
     def test_viewset_get_queryset_with_IsAuthenticated_permission(self):
         from rest_framework.permissions import IsAuthenticated
 
-        setattr(self.view, "permission_classes", (IsAuthenticated,))
+        self.view.permission_classes = (IsAuthenticated,)
 
         request = factory.get(path="/", data="", content_type="application/json")
         response = self.view.as_view(actions={"get": "list"})(request)
@@ -167,7 +167,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
     def test_viewset_get_queryset_with_IsAdminUser_permission(self):
         from rest_framework.permissions import IsAdminUser
 
-        setattr(self.view, "permission_classes", (IsAdminUser,))
+        self.view.permission_classes = (IsAdminUser,)
 
         request = factory.get(path="/", data="", content_type="application/json")
         force_authenticate(request, user=self.user)
@@ -181,7 +181,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
     def test_viewset_get_queryset_with_IsAuthenticatedOrReadOnly_permission(self):
         from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-        setattr(self.view, "permission_classes", (IsAuthenticatedOrReadOnly,))
+        self.view.permission_classes = (IsAuthenticatedOrReadOnly,)
 
         # Unauthenticated GET requests should pass
         request = factory.get(path="/", data="", content_type="application/json")
@@ -200,7 +200,7 @@ class HaystackViewSetPermissionsTestCase(TestCase):
     def test_viewset_get_queryset_with_DjangoModelPermissionsOrAnonReadOnly_permission(self):
         from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 
-        setattr(self.view, "permission_classes", (DjangoModelPermissionsOrAnonReadOnly,))
+        self.view.permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
 
         # The `DjangoModelPermissionsOrAnonReadOnly` is not supported and should raise an
         # AssertionError from rest_framework.permissions.

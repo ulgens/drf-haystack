@@ -141,14 +141,14 @@ class HaystackFilterTestCase(TestCase):
         self.assertEqual(len(response.data), 3)
 
     def test_filter_single_field_OR_custom_lookup_sep(self):
-        setattr(self.view1, "lookup_sep", ";")
+        self.view1.lookup_sep = ";"
         request = factory.get(path="/", data={"lastname": "Hickman;Hood"})  # Should return 3 results
         response = self.view1.as_view(actions={"get": "list"})(request)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 3)
 
         # Reset the `lookup_sep`
-        setattr(self.view1, "lookup_sep", ",")
+        self.view1.lookup_sep = ","
 
     def test_filter_multiple_fields(self):
         # Test filtering multiple fields. The parameters should be AND'ed

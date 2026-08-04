@@ -212,10 +212,10 @@ class FacetQueryBuilder(BaseQueryBuilder):
                     raise ValueError("The 'gap_by' parameter must be one of {}.".format(", ".join(valid_gap)))
 
                 options.setdefault("gap_amount", 1)
-                date_facets[field] = field_options[field]
+                date_facets[field] = options
 
             else:
-                field_facets[field] = field_options[field]
+                field_facets[field] = options
 
         return {"date_facets": date_facets, "field_facets": field_facets, "query_facets": query_facets}
 
@@ -317,7 +317,7 @@ class SpatialQueryBuilder(BaseQueryBuilder):
             # just return.
             pass
         else:
-            for unit in distance.keys():
+            for unit in distance:
                 if not len(distance[unit]) == 1:
                     raise ValueError("Each unit must have exactly one value.")
                 distance[unit] = float(distance[unit][0])

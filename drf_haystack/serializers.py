@@ -139,8 +139,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
                 "allow_unicode",
             ]
             for attr in delete_attrs:
-                if attr in kwargs:
-                    del kwargs[attr]
+                kwargs.pop(attr, None)
         except FieldDoesNotExist:
             pass
 
@@ -190,13 +189,11 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
                 if orig_name in ignore_fields or field_name in ignore_fields:
                     continue
                 # When fields to include are decided by `exclude`
-                if exclude:
-                    if orig_name in exclude or field_name in exclude:
-                        continue
+                if exclude and (orig_name in exclude or field_name in exclude):
+                    continue
                 # When fields to include are decided by `fields`
-                if fields:
-                    if orig_name not in fields and field_name not in fields:
-                        continue
+                if fields and orig_name not in fields and field_name not in fields:
+                    continue
 
                 # Look up the field attributes on the current index model,
                 # in order to correctly instantiate the serializer field.
@@ -223,7 +220,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
             ret = self.multi_serializer_representation(instance)
         else:
             ret = super().to_representation(instance)
-            prefix_field_names = len(getattr(self.Meta, "index_classes")) > 1
+            prefix_field_names = len(self.Meta.index_classes) > 1
             current_index = self._get_index_class_name(type(instance.searchindex))
             for field in self.fields.keys():
                 orig_field = field
@@ -480,11 +477,9 @@ class HighlighterMixin:
         if terms:
             highlighter = self.get_highlighter()(
                 terms,
-                **{
-                    "html_tag": self.highlighter_html_tag,
-                    "css_class": self.highlighter_css_class,
-                    "max_length": self.highlighter_max_length,
-                },
+                html_tag=self.highlighter_html_tag,
+                css_class=self.highlighter_css_class,
+                max_length=self.highlighter_max_length,
             )
             document_field = self.get_document_field(instance)
             if highlighter and document_field:

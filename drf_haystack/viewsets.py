@@ -9,5 +9,3 @@ class HaystackViewSet(RetrieveModelMixin, ListModelMixin, ViewSetMixin, Haystack
     The HaystackViewSet class provides the default ``list()`` and
     ``retrieve()`` actions with a haystack index as it's data source.
     """
-
-    pass
