@@ -6,7 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
 
-def get_random_date(start=date(1950, 1, 1), end=date.today()):
+def get_random_date(start=date(1950, 1, 1), end=datetime.now(tz=UTC).date()):
     """
     :return a random date between `start` and `end`
     """
@@ -14,7 +14,7 @@ def get_random_date(start=date(1950, 1, 1), end=date.today()):
     return start + timedelta(seconds=randrange(delta))
 
 
-def get_random_datetime(start=datetime(1950, 1, 1, 0, 0, tzinfo=UTC), end=datetime.today()):
+def get_random_datetime(start=datetime(1950, 1, 1, 0, 0, tzinfo=UTC), end=datetime.now(tz=UTC)):
     """
     :return a random datetime
     """

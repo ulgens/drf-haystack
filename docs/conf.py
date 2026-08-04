@@ -1,6 +1,6 @@
 import os
 import sys
-from datetime import date
+from datetime import UTC, datetime
 from pathlib import Path
 
 import django
@@ -45,7 +45,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "drf_haystack"
-copyright = f"{date.today().year}, Rolf Håvard Blindheim"
+copyright = f"{datetime.now(tz=UTC).date().year}, Rolf Håvard Blindheim"
 author = "Rolf Håvard Blindheim"
 
 # The version info for the project you're documenting, acts as replacement for
