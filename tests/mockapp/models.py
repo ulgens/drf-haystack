@@ -6,18 +6,32 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
 
-def get_random_date(start=date(1950, 1, 1), end=datetime.now(tz=UTC).date()):
+# TODO: Make use of https://faker.readthedocs.io/en/master/providers/faker.providers.date_time.html
+def get_random_date(start=None, end=None):
     """
     :return a random date between `start` and `end`
     """
+    if not start:
+        start = date(1950, 1, 1)
+
+    if not end:
+        end = datetime.now(tz=UTC).date()
+
     delta = (end - start).days * 24 * 60 * 60
     return start + timedelta(seconds=randrange(delta))
 
 
-def get_random_datetime(start=datetime(1950, 1, 1, 0, 0, tzinfo=UTC), end=datetime.now(tz=UTC)):
+# TODO: Make use of https://faker.readthedocs.io/en/master/providers/faker.providers.date_time.html
+def get_random_datetime(start=None, end=None):
     """
     :return a random datetime
     """
+    if not start:
+        start = datetime(1950, 1, 1, 0, 0, tzinfo=UTC)
+
+    if not end:
+        end = datetime.now(tz=UTC)
+
     delta = (end - start).total_seconds()
     return (start + timedelta(seconds=randint(0, int(delta)))).replace(tzinfo=pytz.UTC)
 
