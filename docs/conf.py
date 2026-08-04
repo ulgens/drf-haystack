@@ -2,8 +2,9 @@ import os
 import re
 import sys
 from datetime import date
-from importlib.util import find_spec
 from pathlib import Path
+
+import django
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -12,15 +13,7 @@ sys.path.insert(0, str(Path("..").resolve()))
 os.environ["RUNTIME_ENV"] = "TESTSUITE"
 os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 
-if find_spec("django") and find_spec("sphinx_rtd_theme"):
-    use_sphinx_rtd_theme = True
-
-    import django
-
-    if hasattr(django, "setup"):
-        django.setup()
-else:
-    use_sphinx_rtd_theme = os.environ.get("READTHEDOCS", False)
+django.setup()
 
 
 def get_version(package):
@@ -96,7 +89,7 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme" if use_sphinx_rtd_theme else "alabaster"
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
