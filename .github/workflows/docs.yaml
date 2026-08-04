@@ -39,6 +39,9 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           version: ${{ env.UV_VERSION }}
 
+      - name: Setup project and install dependencies
+        run: uv sync --group docs
+
       - name: Build docs
         working-directory: ./docs
         run: uv run --with sphinx==${SPHINX_VERSION} make html
