@@ -20,7 +20,7 @@ repos:
         args: ["--target-version=5.2"]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.1
+    rev: v0.16.1
     hooks:
       - id: ruff-check
         args: [--fix]
