@@ -13,3 +13,8 @@ extend-select = [
     # https://docs.astral.sh/ruff/rules/#pyupgrade-up
     "UP",
 ]
+ignore = [
+    # Tons of violations, will be revisited later.
+    # https://docs.astral.sh/ruff/rules/mutable-class-default/#mutable-class-default-ruf012
+    "RUF012",
+]
