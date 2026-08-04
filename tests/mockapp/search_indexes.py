@@ -15,7 +15,7 @@ class MockLocationIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_autocomplete(obj):
-        return " ".join((obj.address, obj.city, obj.zip_code))
+        return f"{obj.address} {obj.city} {obj.zip_code}"
 
     def get_model(self):
         return MockLocation
@@ -38,7 +38,7 @@ class MockPersonIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_full_name(obj):
-        return " ".join((obj.firstname, obj.lastname))
+        return f"{obj.firstname} {obj.lastname}"
 
     @staticmethod
     def prepare_letters(obj):
@@ -46,11 +46,11 @@ class MockPersonIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_description(obj):
-        return " ".join((obj.firstname, "is a nice chap!"))
+        return f"{obj.firstname} is a nice chap!"
 
     @staticmethod
     def prepare_autocomplete(obj):
-        return " ".join((obj.firstname, obj.lastname))
+        return f"{obj.firstname} {obj.lastname}"
 
     def get_model(self):
         return MockPerson
@@ -70,11 +70,11 @@ class MockPetIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_description(obj):
-        return " ".join((obj.name, "the", obj.species))
+        return f"{obj.name} the {obj.species}"
 
     @staticmethod
     def prepare_has_rabies(obj):
-        return True if obj.species == "Dog" else False
+        return obj.species == "Dog"
 
     @staticmethod
     def prepare_autocomplete(obj):

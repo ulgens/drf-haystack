@@ -454,9 +454,9 @@ class HaystackFacetSerializerTestCase(TestCase):
         Returns True if the response.data seems like a faceted result.
         Only works for responses created with the test client.
         """
-        return "objects" in response.data and all([
+        return "objects" in response.data and all(
             k in response.data["objects"] for k in ("count", "next", "previous", "results")
-        ])
+        )
 
     def test_serializer_facet_top_level_structure(self):
         for key in ("fields", "dates", "queries"):
@@ -492,7 +492,7 @@ class HaystackFacetSerializerTestCase(TestCase):
         self.assertEqual(len(dates["created"]), 1)
 
         created = dates["created"][0]
-        self.assertTrue(all([k in created for k in ("text", "count", "narrow_url")]))
+        self.assertTrue(all(k in created for k in ("text", "count", "narrow_url")))
         self.assertEqual(created["text"], "2015-05-01T00:00:00Z")
         self.assertEqual(created["count"], 100)
         self.assertEqual(
@@ -680,7 +680,7 @@ class TestMeta(SimpleTestCase):
             class Meta:
                 fields = ("overriden_fields",)
 
-        self.assertEqual(Serializer.Meta.exclude, tuple())
+        self.assertEqual(Serializer.Meta.exclude, ())
 
     def test_raises_if_fields_and_exclude_defined(self):
         def create_subclass():

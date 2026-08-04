@@ -32,7 +32,7 @@ class HaystackGenericAPIView(GenericAPIView):
 
     filter_backends = [HaystackFilter]
 
-    def get_queryset(self, index_models=[]):
+    def get_queryset(self, index_models=None):
         """
         Get the list of items for this view.
         Returns ``self.queryset`` if defined and is a ``self.object_class``
@@ -40,6 +40,8 @@ class HaystackGenericAPIView(GenericAPIView):
 
         @:param index_models: override `self.index_models`
         """
+        if index_models is None:
+            index_models = []
         if self.queryset is not None and isinstance(self.queryset, self.object_class):
             queryset = self.queryset.all()
         else:

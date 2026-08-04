@@ -34,12 +34,12 @@ class Meta(type):
     Template for the HaystackSerializerMeta.Meta class.
     """
 
-    fields = tuple()
-    exclude = tuple()
-    search_fields = tuple()
-    index_classes = tuple()
-    serializers = tuple()
-    ignore_fields = tuple()
+    fields = ()
+    exclude = ()
+    search_fields = ()
+    index_classes = ()
+    serializers = ()
+    ignore_fields = ()
     field_aliases = {}
     field_options = {}
     index_aliases = {}
@@ -222,7 +222,7 @@ class HaystackSerializer(serializers.Serializer, metaclass=HaystackSerializerMet
             ret = super().to_representation(instance)
             prefix_field_names = len(self.Meta.index_classes) > 1
             current_index = self._get_index_class_name(type(instance.searchindex))
-            for field in self.fields.keys():
+            for field in self.fields:
                 orig_field = field
                 if prefix_field_names:
                     parts = field.split("__")

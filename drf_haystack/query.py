@@ -204,7 +204,7 @@ class FacetQueryBuilder(BaseQueryBuilder):
 
         valid_gap = ("year", "month", "day", "hour", "minute", "second")
         for field, options in field_options.items():
-            if any([k in options for k in ("start_date", "end_date", "gap_by", "gap_amount")]):
+            if any(k in options for k in ("start_date", "end_date", "gap_by", "gap_amount")):
                 if not all(("start_date", "end_date", "gap_by" in options)):
                     raise ValueError("Date faceting requires at least 'start_date', 'end_date' and 'gap_by' to be set.")
 
@@ -229,7 +229,7 @@ class FacetQueryBuilder(BaseQueryBuilder):
                 tokens = [token.strip() for token in option.split(self.view.lookup_sep)]
 
                 for token in tokens:
-                    if not len(token.split(":")) == 2:
+                    if len(token.split(":")) != 2:
                         warnings.warn(
                             f"The {token} token is not properly formatted. Tokens need to be "
                             "formatted as 'token:value' pairs."
@@ -238,7 +238,7 @@ class FacetQueryBuilder(BaseQueryBuilder):
 
                     param, value = token.split(":", 1)
 
-                    if any([k == param for k in ("start_date", "end_date", "gap_amount")]):
+                    if any(k == param for k in ("start_date", "end_date", "gap_amount")):
                         if param in ("start_date", "end_date"):
                             value = parser.parse(value)
 
@@ -300,7 +300,7 @@ class SpatialQueryBuilder(BaseQueryBuilder):
             for k in chain(self.D.UNITS.keys(), [constants.DRF_HAYSTACK_SPATIAL_QUERY_PARAM])
             if k in filters
         }
-        distance = {k: v for k, v in filters.items() if k in self.D.UNITS.keys()}
+        distance = {k: v for k, v in filters.items() if k in self.D.UNITS}
 
         try:
             latitude, longitude = map(

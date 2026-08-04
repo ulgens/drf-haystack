@@ -217,7 +217,9 @@ class HaystackOrderingFilter(OrderingFilter):
     Some docstring here!
     """
 
-    def get_default_valid_fields(self, queryset, view, context={}):
+    def get_default_valid_fields(self, queryset, view, context=None):
+        if context is None:
+            context = {}
         valid_fields = super().get_default_valid_fields(queryset, view, context)
 
         # Check if we need to support aggregate serializers
@@ -227,7 +229,9 @@ class HaystackOrderingFilter(OrderingFilter):
 
         return valid_fields
 
-    def get_valid_fields(self, queryset, view, context={}):
+    def get_valid_fields(self, queryset, view, context=None):
+        if context is None:
+            context = {}
         valid_fields = getattr(view, "ordering_fields", self.ordering_fields)
 
         if valid_fields is None:
@@ -243,8 +247,8 @@ class HaystackOrderingFilter(OrderingFilter):
                     "method and pass some 'index_models'."
                 )
 
-            model_fields = map(
-                lambda model: [(field.name, field.verbose_name) for field in model._meta.fields], queryset.query.models
+            model_fields = (
+                [(field.name, field.verbose_name) for field in model._meta.fields] for model in queryset.query.models
             )
             valid_fields = list(set(reduce(operator.concat, model_fields)))
         else:

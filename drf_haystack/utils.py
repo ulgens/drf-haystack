@@ -19,7 +19,7 @@ def merge_dict(a, b):
         if key in result and isinstance(result[key], dict):
             result[key] = merge_dict(result[key], val)
         elif key in result and isinstance(result[key], list):
-            result[key] = sorted(list(set(val) | set(result[key])))
+            result[key] = sorted(set(val) | set(result[key]))
         else:
             result[key] = deepcopy(val)
 
