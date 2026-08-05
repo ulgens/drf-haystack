@@ -4,4 +4,13 @@
     // https://github.com/ulgens/renovate-presets
     "github>ulgens/renovate-presets:all.json5#v0.0.11",
   ],
+  "packageRules": [
+    {
+      // Sphinx 9.0.x is the last series supporting Python 3.11
+      // https://www.sphinx-doc.org/en/master/changes/index.html
+      "matchPackageNames": ["sphinx"],
+      "matchDatasources": ["pypi"],
+      "allowedVersions": "9.0",
+    },
+  ],
 }
