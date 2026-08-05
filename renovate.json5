@@ -6,6 +6,12 @@
   ],
   "packageRules": [
     {
+      // Stay on the Python 3.11 series
+      "matchPackageNames": ["python"],
+      "matchDatasources": ["python-version"],
+      "allowedVersions": "3.11",
+    },
+    {
       // Sphinx 9.0.x is the last series supporting Python 3.11
       // https://www.sphinx-doc.org/en/master/changes/index.html
       "matchPackageNames": ["sphinx"],
