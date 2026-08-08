@@ -44,4 +44,4 @@ jobs:
 
       - name: Build docs
         working-directory: ./docs
-        run: uv run --with sphinx==${SPHINX_VERSION} make html
+        run: uv run --with "sphinx==${SPHINX_VERSION}" make html
