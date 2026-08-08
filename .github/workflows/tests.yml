@@ -80,17 +80,11 @@ jobs:
       - name: Verify package builds
         run: uv build
 
-      # Use always latest patch version of Django from the matrix version pattern `major.minor.*`.
-      - name: Install matrix django
+      - name: Install matrix deps
         env:
           DJANGO_VERSION: ${{ matrix.django-version }}
-        run: uv pip install -U "django==${DJANGO_VERSION}"
-
-      # Use always latest patch version of DRF from the matrix version pattern `major.minor.*`.
-      - name: Install matrix DRF
-        env:
           DRF_VERSION: ${{ matrix.drf-version }}
-        run: uv pip install -U "djangorestframework==${DRF_VERSION}"
+        run: uv pip install -U "django==${DJANGO_VERSION}" "djangorestframework==${DRF_VERSION}"
 
       - name: Run tests
         run: uv run --no-sync manage.py test tests
