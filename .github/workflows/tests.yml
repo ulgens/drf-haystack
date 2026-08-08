@@ -28,6 +28,7 @@ jobs:
         django-version:
           - "5.2.*"
           - "6.0.*"
+          - "6.1.*"
           - "main"
         python-version:
           - "3.11"
@@ -49,11 +50,19 @@ jobs:
           # https://docs.djangoproject.com/en/6.0/faq/install/#what-python-version-can-i-use-with-django
           - django-version: "6.0.*"
             python-version: "3.11"
+          # DRF <3.18 doesn't support Django 6.1
+          - drf-version: "3.16.*"
+            django-version: "6.1.*"
+          - drf-version: "3.17.*"
+            django-version: "6.1.*"
           # DRF <3.18 doesn't support the unreleased Django main branch
           - drf-version: "3.16.*"
             django-version: "main"
           - drf-version: "3.17.*"
             django-version: "main"
+          # Django 6.1 doesn't support Python 3.11
+          - django-version: "6.1.*"
+            python-version: "3.11"
           # Django main doesn't support Python 3.11
           - django-version: "main"
             python-version: "3.11"
