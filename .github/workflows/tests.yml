@@ -38,6 +38,7 @@ jobs:
         drf-version:
           - "3.16.*"
           - "3.17.*"
+          - "3.18.*"
         exclude:
           # Django 6.0 support added in DRF 3.17.0
           # https://www.django-rest-framework.org/community/release-notes/#3170
