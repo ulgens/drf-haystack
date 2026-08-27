@@ -16,7 +16,7 @@ env:
   # renovate: datasource=python-version depName=python
   PYTHON_VERSION: 3.11.15
   # renovate: datasource=pypi depName=uv
-  UV_VERSION: 0.12.1
+  UV_VERSION: 0.12.5
   # renovate: datasource=pypi depName=sphinx
   SPHINX_VERSION: 9.0.4
 
