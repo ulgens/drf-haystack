@@ -45,7 +45,7 @@ Requirements
 ============
     - A Supported Django install
     - Django REST Framework v3.16 and later
-    - Haystack v2.5 and later
+    - Haystack v3.3.0 and later, below v4
     - A supported search engine such as Solr, Elasticsearch, Whoosh, etc.
     - Python bindings for the chosen backend (see below).
     - (geopy and libgeos if you want to use geo spatial filtering)
@@ -58,18 +58,17 @@ You will also need to install python bindings for the search engine you'll use.
 Elasticsearch
 .............
 
-See haystack `Elasticsearch <https://django-haystack.readthedocs.io/en/v2.4.1/installing_search_engines.html#elasticsearch>`_
+See haystack `Elasticsearch <https://django-haystack.readthedocs.io/en/v3.3.0/installing_search_engines.html#elasticsearch>`_
 docs for details
 
 .. code-block:: none
 
-    $ pip install elasticsearch<2.0.0           # For Elasticsearch 1.x
-    $ pip install elasticsearch>=2.0.0,<3.0.0   # For Elasticsearch 2.x
+    $ pip install elasticsearch>=7.0.0,<8.0.0   # For Elasticsearch 7.x
 
 Solr
 ....
 
-See haystack `Solr <https://django-haystack.readthedocs.io/en/v2.4.1/installing_search_engines.html#solr>`_
+See haystack `Solr <https://django-haystack.readthedocs.io/en/v3.3.0/installing_search_engines.html#solr>`_
 docs for details.
 
 .. code-block:: none
@@ -79,7 +78,7 @@ docs for details.
 Whoosh
 ......
 
-See haystack `Whoosh <https://django-haystack.readthedocs.io/en/v2.4.1/installing_search_engines.html#whoosh>`_
+See haystack `Whoosh <https://django-haystack.readthedocs.io/en/v3.3.0/installing_search_engines.html#whoosh>`_
 docs for details.
 
 .. code-block:: none
@@ -89,7 +88,7 @@ docs for details.
 Xapian
 ......
 
-See haystack `Xapian <https://django-haystack.readthedocs.io/en/v2.4.1/installing_search_engines.html#xapian>`_
+See haystack `Xapian <https://django-haystack.readthedocs.io/en/v3.3.0/installing_search_engines.html#xapian>`_
 docs for details.
 
 
