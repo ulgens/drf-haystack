@@ -39,7 +39,7 @@ class BaseHaystackFilterBackend(BaseFilterBackend):
         Get the query builder instance and return constructed query filters.
         """
         query_builder = self.get_query_builder(backend=self, view=view)
-        return query_builder.build_query(**(filters if filters else {}))
+        return query_builder.build_query(**(filters or {}))
 
     def process_filters(self, filters, queryset, view):
         """
