@@ -72,11 +72,13 @@ from drf_haystack.viewsets import HaystackViewSet
 
 from myapp.search_indexes import PersonIndex  # You would define this Index normally as per Haystack's documentation
 
+
 # Serializer
 class PersonSearchSerializer(HaystackSerializer):
     class Meta:
         index_classes = [PersonIndex]
         fields = ["firstname", "lastname", "full_name"]
+
 
 # ViewSet
 class PersonSearchViewSet(HaystackViewSet):
